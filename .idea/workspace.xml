@@ -1,7 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d48bce7d-26b5-4868-9818-fddeb9034c0e" name="Default" comment="" />
+    <list default="true" id="d48bce7d-26b5-4868-9818-fddeb9034c0e" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/uploads/0a273aea35b152ac53ff56c6d0096b08" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/uploads/519a34a755aab82837d9557f730b03b3" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/uploads/961a1c4d57522db5c7c7da25a98f7a49" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/videos/08c267f72346e50b1b4eeb9c22b3354c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/videos/1ae02df9a6a1005c7fe44ebc270117cc" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/videos/1dbe7921346e86a04843b83baeb3545a" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/videos/2c9cc55bf6e362167cf2dc1090eef449" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/videos/2da28cf903f62e50c2bce95f8514924c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/videos/30c54471b33ac9481a349e213c6f856e" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/videos/3347102b7faf07afce0fb81abf53c5a7" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/videos/3c726a1500768cc23d88a0ceda2baa38" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/videos/4235c6328c2bd44dfb7f2ed85a282a9c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/videos/586d90e40cee75460f4b93337c73d260" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/videos/58e87fd6a68218f1a57ad8da02c69142" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/videos/7de0611c2c293cfb66992c79cdf5c834" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/videos/845086051969cad1df559de3d6ab112b" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/videos/8518e11f6c8e4e687446241bff1d4957" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/videos/8af438aa61b541c993002378fbd3a675" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/videos/8b1f7c35f40f2a8827988e3722a8c1d8" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/videos/90b456145c53b41473908555f0f1b89d" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/videos/96bcfe49bb917c5bb7b5155ea6f09250" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/videos/9a95a866c6d9c3eef974e606a580fb02" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/videos/bab312161a4df84940835e578e26d503" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/videos/d2176f290f67aaab10c92fe8671a5040" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/videos/d905f50486da9fe108d6ef292d14fd01" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/videos/e27a6ee1970712a598f13924a00c24d7" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/videos/e99cee67c3f4b7f9489b050acc13ad55" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/videos/eb9017793d326ef8199526ed1aba8236" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/videos/fd5f37491e7506de360f3d8ee3cc8a55" afterPath="" />
+    </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -18,11 +48,21 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="app.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="app.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="660">
-              <caret line="44" column="3" lean-forward="true" selection-start-line="44" selection-start-column="3" selection-end-line="44" selection-end-column="3" />
+            <state relative-caret-position="435">
+              <caret line="29" column="34" lean-forward="true" selection-start-line="29" selection-start-column="34" selection-end-line="29" selection-end-column="34" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="240">
+              <caret line="16" column="7" lean-forward="true" selection-start-line="16" selection-start-column="7" selection-end-line="16" selection-end-column="7" />
               <folding />
             </state>
           </provider>
@@ -448,12 +488,12 @@
       <updated>1519647060351</updated>
       <workItem from="1519647062248" duration="16243000" />
       <workItem from="1519716925012" duration="33944000" />
-      <workItem from="1519921619121" duration="720000" />
+      <workItem from="1519921619121" duration="1327000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="50907000" />
+    <option name="totallyTimeSpent" value="51514000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1920" height="1106" extended-state="6" />
@@ -750,8 +790,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="660">
-          <caret line="44" column="3" lean-forward="true" selection-start-line="44" selection-start-column="3" selection-end-line="44" selection-end-column="3" />
+        <state relative-caret-position="435">
+          <caret line="29" column="34" lean-forward="true" selection-start-line="29" selection-start-column="34" selection-end-line="29" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="16" column="7" lean-forward="true" selection-start-line="16" selection-start-column="7" selection-end-line="16" selection-end-column="7" />
           <folding />
         </state>
       </provider>
