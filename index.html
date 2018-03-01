@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <title>Popi Basit Video Ekleme Arayüzü</title>
+      <link rel="stylesheet" href="stylesheets/main.css">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    </head>
+    <body>
+      <div class='container'>
+        <div class='header'>
+          <h1>Popi</h1>
+          <h4>Eğlencenin en saf hali</h4>
+        </div>
+        <h2>Video</h2>
+        <h4>EKLE/GÜNCELLE</h4>
+        <form id='reviewForm'
+              action='http://localhost:8000/upload'
+              method='post'
+              encType="multipart/form-data">
+          <input type="text" id='title' name="video" placeholder='Başlık' />
+          <br/>
+          <input type="text" id='tags' placeholder='Etiketler virgül ile ayırın'/>
+          <br/>
+		  <input type="file" id="video" accept="video/*"/>
+		  <br/>
+		  <br/>
+          <button type='submit'>Video Ekle/Güncelle</button>
+        </form>
+        <br/>
+        <h4>OKU/SİL</h4>
+        <ul id='reviews'></ul>
+        <div class="pcontainer" id="progress-container">
+          <div class="loader" id="progress"></div>
+        </div>
+      </div>
+      <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+      <script src="https://sdk.amazonaws.com/js/aws-sdk-2.196.0.min.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+      <script src="javascripts/main.js"></script>
+      <script src="javascripts/progressbar.js"></script>
+      <link href="//fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
+    </body>
+</html>
