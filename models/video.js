@@ -10,14 +10,23 @@ var sch = new Schema({
     fbId: String,
     like: Number,
     dislike: Number,
+    viewStarted: Number,
+    viewCompleted: Number,
     title: String,
     url: String,
     ownerId: String,
     videoOwner: String,
     createdAt: Date,
-    user: String,
+    user: { type: String, ref: 'User' },
     tags: Array,
-    isDeleted: Boolean
+    isPromoted: {
+        type: Boolean,
+        default: false
+    },
+    isDeleted: {
+        type: Boolean,
+        default: false
+    }
 });
 
 var Video = mongoose.model('Video', sch);

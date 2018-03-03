@@ -8,8 +8,13 @@ var bodyParser = require('body-parser');
 var index = require('./routes/index');
 var users = require('./routes/users');
 var admin = require('./routes/admin');
+var video = require('./routes/video');
 
 var app = express();
+
+var mongoose = require('mongoose');
+
+mongoose.connect('mongodb://104.236.87.130:27017/popiDatabase');
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
@@ -22,9 +27,11 @@ app.use(cookieParser());
 //app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static('public'));
 
+
 app.use('/', index);
 app.use('/users', users);
 app.use('/admin', admin);
+app.use('/video', video);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

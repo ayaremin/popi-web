@@ -15,6 +15,8 @@ var sch = new Schema({
     gender: Number,
     profilePicture: String,
     popiPoint: Number,
+    videosLiked: [{ type: Schema.Types.ObjectId, ref: 'Video' }],
+    videosDisliked: [{ type: Schema.Types.ObjectId, ref: 'Video' }]
 });
 
 var User = mongoose.model('User', sch);
