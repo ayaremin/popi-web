@@ -97,12 +97,12 @@ router.post('/trend', function (req, res, next) {
             }]));
         }
     )(function (err, data) {
-        data.slice(0,30);
+        var sliced = data.slice(0,30);
         if (err) {
             console.error(err);
             res.json({status: 'error', message: err.message});
         } else {
-            res.json({status: 'success', message: 'Trend Videolar', count: data.length, data: data});
+            res.json({status: 'success', message: 'Trend Videolar', count: sliced.length, data: sliced});
         }
         return res;
     });
