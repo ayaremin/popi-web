@@ -3,8 +3,7 @@
  */
 var mongoose = require('mongoose');
 
-var Schema = mongoose.Schema,
-    ObjectId = Schema.ObjectId;
+var Schema = mongoose.Schema;
 
 var sch = new Schema({
     fbId: String,
@@ -17,7 +16,7 @@ var sch = new Schema({
     ownerId: String,
     videoOwner: String,
     createdAt: Date,
-    user: { type: String, ref: 'User' },
+    user: String,
     tags: Array,
     isPromoted: {
         type: Boolean,
@@ -28,6 +27,16 @@ var sch = new Schema({
         default: false
     }
 });
+
+sch.virtual('userObject', {
+    ref: 'User',
+    localField: 'user',
+    foreignField: 'fbId',
+    justOne: true
+});
+
+sch.set('toObject', { virtuals: true });
+sch.set('toJSON', { virtuals: true });
 
 var Video = mongoose.model('Video', sch);
 

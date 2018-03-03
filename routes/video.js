@@ -29,7 +29,7 @@ router.post('/', function (req, res, next) {
             console.log(combinedList);
             Video
                 .find({ _id: { $nin: combinedList }, isDeleted: false })
-                .select()
+                .populate('userObject')
                 .skip(perPage * page)
                 .limit(perPage)
                 .exec(function (err, videos) {
