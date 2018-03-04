@@ -3,6 +3,7 @@ pipeline {
     stages {
         stage('build') {
             steps {
+                sh 'npm start'
                 sh 'cd ../../../../../../..'
                 sh 'ls'
                 sh '''
