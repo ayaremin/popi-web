@@ -1,4 +1,5 @@
 var express = require('express');
+var vhost = require('vhost')
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -11,6 +12,7 @@ var admin = require('./routes/admin');
 var video = require('./routes/video');
 
 var app = express();
+app.use(vhost('api.popiapp.com', express.static('public', {fallthrough: false})))
 
 var mongoose = require('mongoose');
 
@@ -20,7 +22,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
 app.use(logger('dev'));
-app.use(subdomain('api', api));
+
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 app.use(cookieParser());
