@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('build') {
             steps {
-                sh 'ls ../../'
+                sh 'ls ../../../../../../'
                 sh 'ls'
                 sh '''
                     echo "Multiline shell steps works too"
