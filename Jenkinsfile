@@ -4,7 +4,7 @@ pipeline {
         stage('build') {
             steps {
                 sh 'npm start'
-                sh 'cd ../../../../../../..'
+                sh 'cd ../../'
                 sh 'ls'
                 sh '''
                     echo "Multiline shell steps works too"
