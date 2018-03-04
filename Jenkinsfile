@@ -3,7 +3,8 @@ pipeline {
     stages {
         stage('build') {
             steps {
-                sh 'echo "Hello World"'
+                sh 'cd ../var/www/popi'
+                sh 'ls'
                 sh '''
                     echo "Multiline shell steps works too"
                     ls -lah
