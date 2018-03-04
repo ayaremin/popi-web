@@ -3,13 +3,7 @@ pipeline {
     stages {
         stage('build') {
             steps {
-                sh 'ls ../../../../../../'
-                sh 'ls'
-                sh '''
-                    echo "Multiline shell steps works too"
-                    ls -lah
-                '''
-                sh 'npm --version'
+                sh ' ./../../../../../../var/www/updatepopi'
             }
         }
     }
