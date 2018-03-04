@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('build') {
             steps {
-                sh '../../../../../../var/www/updatepopi'
+                sh './../../../../../../var/www/updatepopi.sh'
             }
         }
     }
