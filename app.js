@@ -1,5 +1,5 @@
 var express = require('express');
-var vhost = require('vhost')
+var vhost = require('vhost');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
