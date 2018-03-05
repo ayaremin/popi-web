@@ -3,7 +3,6 @@ pipeline {
     stages {
         stage('build') {
             steps {
-                sh 'echo 'emin''
                 sh 'ls /var/www'
             }
         }
