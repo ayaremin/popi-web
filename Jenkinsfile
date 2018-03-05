@@ -3,6 +3,7 @@ pipeline {
     stages {
         stage('build') {
             steps {
+                sh 'ssh root@104.236.87.130'
                 sh 'ls ../../../../../../'
             }
         }
