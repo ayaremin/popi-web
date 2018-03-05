@@ -26,6 +26,7 @@ reviewForm.addEventListener('submit', function (e) {
     var array = this.tags.value.split(',');
 
     var files = videofile.files;
+
     if (!files.length) {
         return alert('Please choose a file to upload first.');
     }

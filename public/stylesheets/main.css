@@ -4,13 +4,13 @@ html, body {
   padding: 0px;
 }
 
-
 #reviews {
   list-style-type: none;
   margin: 0;
   padding: 0;
   border-bottom: 1px solid #EEE;
   border-radius: 2px;
+  margin-left: 15px;
   box-shadow: 0 1px 6px rgba(0,0,0,.1),0 1px 4px rgba(0,0,0,.1);
   background-color: #fff;
   min-height: 20px;
@@ -99,6 +99,11 @@ header {
   height: 100px;
 }
 
+.logo {
+  width: 80px;
+  height: 80px;
+}
+
 .logo-container > a {
   position: relative;
   width: auto;
@@ -107,6 +112,7 @@ header {
   padding-left: 10px;
   padding-right: 10px;
   font-family: 'Open Sans',sans-serif;
+  color: #7555cb;
   vertical-align: middle;
   font-size: 32px;
   font-weight: 600;
@@ -143,4 +149,74 @@ header {
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+.insertArea {
+  min-height: 300px;
+}
+
+.trendArea {
+  height: 357px;
+  max-width: 640px;
+  padding: 10px 10px 10px;
+  margin: 0 auto;
+  background-color: #eee;
+  border: 3px dotted rgba(0,0,0,0.1)
+}
+
+.wrapper-add {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.form-add-video {
+  max-width: 640px;
+  padding: 10px 10px 10px;
+  margin: 0 auto;
+  background-color: #eee;
+  border: 3px dotted rgba(0,0,0,0.1);
+}
+
+.card {
+  height: 200px;
+  width: 220px;
+  flex: 0 0 auto;
+  background-color: #ffffff;
+  margin: 4px 4px 4px 4px;
+  box-shadow: 4px 4px 8px 0 rgba(0,0,0,0.2);
+  padding: 5px 5px 5px 5px;
+  transition: 0.3s;
+  border-radius: 5px; /* 5px rounded corners */
+}
+
+.red {
+  background-color: #c9302c !important; ;
+  color: white;
+}
+
+#promoted-videos {
+  height: 220px;
+  width: auto;
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+}
+
+#promoted-videos h4 {
+  font-size: 18px;
+  font-weight: 400;
+}
+
+#promoted-videos button {
+  width: 100%;
+}
+/* On mouse-over, add a deeper shadow */
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+/* Add some padding inside the card container */
+#promoted-videos .container {
+  padding: 2px 2px;
+  width: 100%;
 }
