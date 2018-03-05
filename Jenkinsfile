@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('build') {
             steps {
-                sh 'cd /var/www'
+                sh 'ls /var/www'
             }
         }
     }
