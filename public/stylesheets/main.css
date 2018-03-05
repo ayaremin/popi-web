@@ -1,12 +1,9 @@
-body {
-  font-family: Roboto, sans-serif;
-  font-size: 16px;
-  background-color: #FDFDFD;
+html, body {
+  background: #fff;
+  margin: 0px;
+  padding: 0px;
 }
 
-div, input, a, button, textarea, ul, li {
-  box-sizing: border-box;
-}
 
 #reviews {
   list-style-type: none;
@@ -85,21 +82,21 @@ textarea {
 header {
   width: 100%;
   height: auto;
-  min-height: 80px;
+  min-height: 100px;
 }
 
 .header-container {
-  min-height: 80px;
+  min-height: 100px;
   padding-top: 15px;
   padding-bottom: 15px;
 }
 
 .logo-container {
-  height: 80px;
+  height: 100px;
 }
 
 .navigation-container {
-  height: 80px;
+  height: 100px;
 }
 
 .logo-container > a {
@@ -126,7 +123,7 @@ header {
   position: relative;
   float: left;
   height: auto;
-  line-height: 80px;
+  line-height: 100px;
   width: auto;
   padding-left: 20px;
   padding-right: 20px;

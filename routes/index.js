@@ -21,6 +21,17 @@ router.get('/login', function(req, res, next) {
     }
 });
 
+router.get('/logout', function(req, res, next) {
+
+    req.session.reset();
+
+    if (req.session.user) {
+        res.redirect('/');
+    } else {
+        res.redirect('/login');
+    }
+});
+
 router.post('/login', function (req, res, next) {
     var pass = req.body.password;
     var email = req.body.email;
