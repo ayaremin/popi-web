@@ -5,6 +5,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var session = require('client-sessions');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
@@ -20,6 +21,13 @@ mongoose.connect('mongodb://104.236.87.130:27017/popiDatabase');
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
+
+app.use(session({
+    cookieName: 'session',
+    secret: 'eminayarbusraayar',
+    duration:  24 * 60 * 60 * 1000,
+    activeDuration: 30 * 60 * 1000,
+}));
 
 app.use(logger('dev'));
 
