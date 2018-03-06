@@ -61,34 +61,60 @@ reviewForm.addEventListener('submit', function (e) {
 // READ VIDEOS
 
 var reviews = document.getElementById('reviews');
-var reviewsRef = db.ref('/videos');
+var promoteds = document.getElementById('promoted-videos');
+var videosRef = db.ref('/videos');
+var promotedsRef = db.ref('/videos').orderByChild('isPromoted').equalTo(true);
 
-reviewsRef.orderByKey().on('child_added', function (data) {
-    var li = document.createElement('li');
-    li.id = data.key;
-    var title = data.val().title;
-    var tags = data.val().tags;
-    var abc = {
-        'title': title,
-        'tags': tags
-    };
-    li.innerHTML = reviewTemplate(abc);
-    reviews.appendChild(li);
+
+videosRef.orderByKey().on('child_added', function (data) {
+    var card = document.createElement('div');
+    card.id = data.key;
+    card.innerHTML = createVideoItem(data.val());
+    card.classList.add('pure-padding');
+    card.classList.add('col-lg-4');
+    card.classList.add('col-md-4');
+    card.classList.add('col-sm-4');
+    card.classList.add('col-xs-12');
+    reviews.appendChild(card);
 });
 
-reviewsRef.on('child_changed', function (data) {
+videosRef.on('child_changed', function (data) {
     var reviewNode = document.getElementById(data.key);
-    reviewNode.innerHTML = reviewTemplate(data.val());
+    reviewNode.innerHTML = createVideoItem(data.val());
 });
 
-reviewsRef.on('child_removed', function (data) {
+videosRef.on('child_removed', function (data) {
     var reviewNode = document.getElementById(data.key);
     reviewNode.parentNode.removeChild(reviewNode);
 });
 
-reviews.addEventListener('click', function (e) {
-    var reviewNode = e.target.parentNode;
+promotedsRef.on('child_added', function (data) {
+    var cardTrend = document.createElement('div');
+    //cardTrend.id = data.key;
+    cardTrend.classList.add(data.key);
+    cardTrend.innerHTML = createTrendVideoItem(data.val());
+    promoteds.appendChild(cardTrend);
+});
 
+promotedsRef.on('child_removed', function (data) {
+    var reviewNode = document.getElementsByClassName(data.key)[0];
+    console.log(reviewNode);
+    reviewNode.parentNode.removeChild(reviewNode);
+});
+
+promoteds.addEventListener('click', function (e) {
+    var reviewNode = e.target.parentNode.parentNode.parentNode;
+    if (e.target.classList.contains('unpromote')) {
+        var x = confirm("Bu postu öne çıkarılanlardan kaldırmak istediğinize emin misiniz ?");
+        if (x) {
+            var id = reviewNode.classList[0];
+            db.ref('videos/' + id).child('isPromoted').set(false);
+        }
+    }
+});
+
+reviews.addEventListener('click', function (e) {
+    var reviewNode = e.target.parentNode.parentNode.parentNode.parentNode;
     // UPDATE REVEIW
     if (e.target.classList.contains('edit')) {
         title.value = reviewNode.querySelector('.title').innerText;
@@ -96,22 +122,36 @@ reviews.addEventListener('click', function (e) {
         hiddenId.value = reviewNode.id;
     }
 
-    // DELETE REVEIW
+    // DELETE VIDEO
     if (e.target.classList.contains('delete')) {
         var x = confirm("" + reviewNode.title + ' silmek istediğinize emin misiniz ?');
         if (x) {
-            console.log('siltiklandi');
             var id = reviewNode.id;
-            reviewsRef.child(id).child('isDeleted').set(true);
+            videosRef.child(id).child('isDeleted').set(true);
         }
     }
 
     if (e.target.classList.contains('activate')) {
-        var x = confirm("Bu postu aktifleştirmek istediğinize eminmisiniz -- " + reviewNode.title + ' ?');
+        var x = confirm("Bu postu aktifleştirmek istediğinize eminmisiniz ?" );
         if (x) {
-            console.log('ctivate');
             var id = reviewNode.id;
             db.ref('videos/' + id).child('isDeleted').set(false);
+        }
+    }
+
+    if (e.target.classList.contains('promote')) {
+        var x = confirm("Bu postu öne çıkarılanlara eklemek istediğinize emin misiniz ?");
+        if (x) {
+            var id = reviewNode.parentNode.id;
+            db.ref('videos/' + id).child('isPromoted').set(true);
+        }
+    }
+
+    if (e.target.classList.contains('unpromote')) {
+        var x = confirm("Bu postu öne çıkarılanlardan kaldırmak istediğinize emin misiniz ?");
+        if (x) {
+            var id = reviewNode.parentNode.id;
+            db.ref('videos/' + id).child('isPromoted').set(false);
         }
     }
 });
@@ -140,19 +180,43 @@ function saveToFirebase(array, filename) {
     this.tags.value = '';
 };
 
-function reviewTemplate(data) {
+function createTrendVideoItem (data) {
     var template;
 
-    if (data.isDeleted && data.isDeleted == true) {
-        template = `
-    <div class='title'>${data.title}</div>
-    <div class='tags'>${data.tags}</div>
-    <button class='activate'>Silinmiş Post - Aktifleştir</button> `;
-    } else {
-        template = `
-    <div class='title'>${data.title}</div>
-    <div class='tags'>${data.tags}</div>
-    <button class='delete'>Sil</button> `;
-    }
+    template = `<div class="card">
+        <div class="container">
+        <h4><b>${data.title}</b></h4>
+    <button class="btn btn-lg btn-primary-new btn-block red unpromote" type="submit">Çıkar</button>
+        <button class="btn btn-lg btn-primary-new btn-block" onclick="location.href='${data.url}';" type="submit">İzle</button>
+        </div>
+        </div>`;
+
     return template;
 };
+
+function createVideoItem (data) {
+    var template;
+
+    template = `<div class="card-auto">
+        <div class="container">
+            <h4 id="text"><b>${data.title}</b></h4>
+            <h6>${data.tags}</b></h6>
+            ${data.isDeleted && data.isDeleted === true ?
+                '<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"> <button class="btn btn-lg btn-primary-new btn-block green activate" type="submit">Postu Aktifleştir</button> </div>'
+            :
+                '<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"> <button class="btn btn-lg btn-primary-new btn-block red delete" type="submit">Sil</button> </div>' }
+            <br>
+            <br>
+            <div class="margin-top">
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12"> <button onclick="location.href='${data.url}'" class="btn btn-lg btn-primary-new btn-block watch" type="submit">İzle</button> </div>
+                ${data.isPromoted  && data.isPromoted === true ?
+                    '<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12"> <button class="btn btn-lg btn-primary-new btn-block unpromote red" type="submit">Öne Çıkarma</button> </div>' 
+                :
+                    '<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12"> <button class="btn btn-lg btn-primary-new btn-block promote green" type="submit">Öne Çıkar</button> </div>' }
+            </div>  
+        </div>`;
+
+    return template;
+};
+
+

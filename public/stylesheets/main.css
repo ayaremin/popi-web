@@ -1,19 +1,18 @@
 html, body {
-  background: #fff;
+  background: #f7f7f7;
   margin: 0px;
   padding: 0px;
 }
 
 #reviews {
-  list-style-type: none;
+  display: inline;
+  position: relative;
+  float: left;
+  width: 100%;
   margin: 0;
   padding: 0;
-  border-bottom: 1px solid #EEE;
   border-radius: 2px;
-  margin-left: 15px;
-  box-shadow: 0 1px 6px rgba(0,0,0,.1),0 1px 4px rgba(0,0,0,.1);
-  background-color: #fff;
-  min-height: 20px;
+  margin-left: 8px;
   margin-bottom: 20px;
 }
 
@@ -181,7 +180,7 @@ header {
   height: 200px;
   width: 220px;
   flex: 0 0 auto;
-  background-color: #ffffff;
+  background-color: #f5f5f5;
   margin: 4px 4px 4px 4px;
   box-shadow: 4px 4px 8px 0 rgba(0,0,0,0.2);
   padding: 5px 5px 5px 5px;
@@ -189,8 +188,24 @@ header {
   border-radius: 5px; /* 5px rounded corners */
 }
 
+.card-auto {
+  height: 220px;
+  width: 100%;
+  background-color: #f5f5f5;
+  box-shadow: 4px 4px 8px 0 rgba(0,0,0,0.2);
+  padding: 5px 5px 5px 5px;
+  transition: 0.3s;
+  display: inline-flex;
+  border-radius: 5px; /* 5px rounded corners */
+}
+
 .red {
   background-color: #c9302c !important; ;
+  color: white;
+}
+
+.green {
+  background-color: #5cb85c !important; ;
   color: white;
 }
 
@@ -210,13 +225,26 @@ header {
 #promoted-videos button {
   width: 100%;
 }
-/* On mouse-over, add a deeper shadow */
+
 .card:hover {
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
 
-/* Add some padding inside the card container */
 #promoted-videos .container {
   padding: 2px 2px;
   width: 100%;
+}
+
+.margin-top {
+  margin-top: 15px;
+}
+
+.pure-padding {
+  width: auto;
+  margin: auto;
+  padding: 10px 10px 10px 10px;
+}
+
+.big-text {
+  font-size: 30px !important;
 }

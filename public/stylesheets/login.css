@@ -21,8 +21,9 @@
     display: block;
     margin-left: auto;
     margin-right: auto;
-    width: 50%;
+    width: 100%;
     color: #7055cb;
+    text-align: center;
 }
 
 .form-control {
