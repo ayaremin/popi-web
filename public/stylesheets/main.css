@@ -152,6 +152,8 @@ header {
 
 .insertArea {
   min-height: 300px;
+  padding-left: 0px !important;
+  padding-right: 0px !important;
 }
 
 .trendArea {
