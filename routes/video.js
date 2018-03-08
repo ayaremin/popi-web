@@ -13,6 +13,8 @@ mongoose.connect('mongodb://104.236.87.130:27017/popiDatabase');
 /* Get unwatched videos to user */
 router.post('/', function (req, res, next) {
     var userId = req.body.user;
+    var videoId = req.body.videoId;
+
     async.seq(
         function (cb) {
             User.findOne({fbId: userId}, function (err, user) {
@@ -40,6 +42,23 @@ router.post('/', function (req, res, next) {
                     }
                     cb(null, videos);
                 });
+        },
+        function (videos, cb) {
+            // if a deeplink clicked so add clicked video to first index of list
+            if (videoId) {
+                Video
+                    .findOne({fbId: videoId})
+                    .populate({path:'userObject', select:'name fbId gender popiPoint'}) // <--
+                    .exec(function (err, video) {
+                        if (err) {
+                            return res.status(400).send({err: 'Video bulunamadı'});
+                        }
+                        videos.unshift(video);
+                        cb(null, videos);
+                    });
+            } else {
+                cb(null, videos);
+            }
         }
     )(function (err, data) {
         if (err) {
