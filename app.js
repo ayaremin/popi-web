@@ -13,7 +13,6 @@ var admin = require('./routes/admin');
 var video = require('./routes/video');
 
 var app = express();
-app.use(vhost('api.popiapp.com', express.static('public', {fallthrough: false})))
 
 var mongoose = require('mongoose');
 
@@ -24,9 +23,12 @@ app.set('view engine', 'pug');
 
 app.use(session({
     cookieName: 'session',
-    secret: 'eminayarbusraayar',
+    secret: 'eminayarbusraayarbasakayar',
     duration:  24 * 60 * 60 * 1000,
     activeDuration: 30 * 60 * 1000,
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: !true }
 }));
 
 app.use(logger('dev'));

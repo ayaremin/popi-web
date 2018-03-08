@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <title>Popi Basit Video Ekleme Arayüzü</title>
+      <link rel="stylesheet" href="../stylesheets/main.css">
+      <link rel="stylesheet" href="../stylesheets/login.css">
+      <link type="text/css" rel="stylesheet" href="../stylesheets/bootstrap.css" />
+    </head>
+    <body>
+      <header>
+      <div class="container header-container">
+        <div class="logo-container col-lg-4 col-md-4 col-sm-4 col-xs-8">
+          <img class="logo" src="../images/logo-big.png" />
+          <a>Popi</a>
+        </div>
+        <div class="navigation-container col-lg-8 col-md-8 col-sm-8 col-xs-4">
+          <nav class="site-navigation">
+            <a class="nav-element" href="/admin/logout">Çıkış</a>
+          </nav>
+        </div>
+      </div>
+    </header>
+      <div class='container'>
+        <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12 insertArea">
+          <div class="wrapper-add">
+            <form  id='reviewForm'
+                   method='post'
+                   encType="multipart/form-data"
+                   action="" class="form-add-video">
+              <h3 class="form-signin-heading center">Video Ekle</h3>
+              <hr class="colorgraph"><br>
+              <input type="text" id='title' required="true" name="video" placeholder='Başlık' class="form-control" />
+              <br/>
+              <input type="text" id='tags' required="true" placeholder='Etiketler virgül ile ayırın' class="form-control" />
+              <br/>
+              <input type="file" id="video" required="true" accept="video/*" class="form-control" />
+              <br/>
+              <button class="btn btn-lg btn-primary-new btn-block" type="submit">Video Ekle</button>
+            </form>
+          </div>
+        </div>
+        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12 trendArea wrapper-add">
+          <h3 class="form-signin-heading">Öne Çıkarılan Videolar</h3>
+          <hr class="colorgraph"><br>
+          <div id="promoted-videos">
+          </div>
+        </div>
+        <h4 class="col-lg-12 col-md-12 col-sm-12 col-xs-12 center big-text">Videolar</h4>
+        <div id='reviews'></div>
+        <div class="pcontainer" id="progress-container">
+          <div class="loader" id="progress"></div>
+        </div>
+      </div>
+      <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+      <script src="https://sdk.amazonaws.com/js/aws-sdk-2.196.0.min.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+      <script src="../javascripts/main.js"></script>
+      <script src="../javascripts/progressbar.js"></script>
+      <link href="//fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
+    </body>
+</html>

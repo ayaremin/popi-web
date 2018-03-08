@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
-
+var path    = require('path');
+var Admin = require('../models/admin');
 var AWS = require('aws-sdk');
 var fs = require('fs');
 var ffmpeg = require('ffmpeg');
@@ -11,6 +12,49 @@ AWS.config.update({ accessKeyId: 'AKIAJRC7DLNEHD2NRRMQ', secretAccessKey: 'IXZqi
 var s3 = new AWS.S3();
 
 var myBucket = 'popiapp-hosting-mobilehub-496562667/videos';
+
+router.get('/', function(req, res, next) {
+    if (req.session.user) {
+        res.sendFile((path.join(__dirname+'/../admin.html')));
+    } else {
+        res.redirect('/admin/login');
+    }
+});
+
+router.get('/login', function(req, res, next) {
+    if (req.session.user) {
+        res.redirect('/admin');
+    } else {
+        res.sendFile((path.join(__dirname+'/../login.html')));
+    }
+});
+
+router.get('/logout', function(req, res, next) {
+
+    req.session.reset();
+
+    if (req.session.user) {
+        res.redirect('/admin');
+    } else {
+        res.redirect('/admin/login');
+    }
+});
+
+router.post('/login', function (req, res, next) {
+    var pass = req.body.password;
+    var email = req.body.email;
+
+    Admin.findOne({email: email}, function (err, user) {
+        if (err || !user) {
+            return res.status(400).send({err: 'Emailiniz ile eşleşen bir kullanıcı bulunamadı'});
+        }
+        if (user.password !== pass) {
+            return res.status(400).send({err: 'Girdiğiniz parola yanlış'});
+        }
+        req.session.user = user;
+        res.redirect('/admin');
+    });
+});
 
 /* UPLOAD*/
 router.post('/upload', function(req, res, next) {

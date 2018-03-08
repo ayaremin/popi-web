@@ -1,65 +1,239 @@
-<!doctype html>
-<html>
-    <head>
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1" />
-      <title>Popi Basit Video Ekleme Arayüzü</title>
-      <link rel="stylesheet" href="stylesheets/main.css">
-      <link rel="stylesheet" href="stylesheets/login.css">
-      <link type="text/css" rel="stylesheet" href="stylesheets/bootstrap.css" />
-    </head>
-    <body>
-      <header>
-      <div class="container header-container">
-        <div class="logo-container col-lg-4 col-md-4 col-sm-4 col-xs-8">
-          <img class="logo" src="images/logo-big.png" />
-          <a>Popi</a>
-        </div>
-        <div class="navigation-container col-lg-8 col-md-8 col-sm-8 col-xs-4">
-          <nav class="site-navigation">
-            <a class="nav-element" href="/logout">Çıkış</a>
-          </nav>
-        </div>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<!DOCTYPE html><html lang='en' class=''>
+<head><script src='//production-assets.codepen.io/assets/editor/live/console_runner-079c09a0e3b9ff743e39ee2d5637b9216b3545af0de366d4b9aad9dc87e26bfd.js'></script><script src='//production-assets.codepen.io/assets/editor/live/events_runner-73716630c22bbc8cff4bd0f07b135f00a0bdc5d14629260c3ec49e5606f98fdd.js'></script><script src='//production-assets.codepen.io/assets/editor/live/css_live_reload_init-2c0dc5167d60a5af3ee189d570b1835129687ea2a61bee3513dee3a50c115a77.js'></script><meta charset='UTF-8'><meta name="robots" content="noindex"><link rel="shortcut icon" type="image/x-icon" href="//production-assets.codepen.io/assets/favicon/favicon-8ea04875e70c4b0bb41da869e81236e54394d63638a1ef12fa558a4a835f1164.ico" /><link rel="mask-icon" type="" href="//production-assets.codepen.io/assets/favicon/logo-pin-f2d2b6d2c61838f7e76325261b7195c27224080bc099486ddd6dccb469b8e8e6.svg" color="#111" /><link rel="canonical" href="https://codepen.io/ikabot/pen/XgozPE?limit=all&page=9&q=coming+soon" />
+
+
+  <style class="cp-pen-styles">* {
+    border: 0;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    font-family: -apple-system, BlinkMacSystemFont,
+    "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans",
+    "Droid Sans", "Helvetica Neue", sans-serif;
+    font-size: 62.5%; /* 1rem vaut 10px */
+  }
+
+  body {
+    font-size: 1.4rem; /* 1.4 rem vaut 14px */
+    height: 100%;
+  }
+
+  h1 {
+    color: #7055cb!important; ;
+  }
+
+  .wrapper {
+    display: flex;
+    background-color: #f7f7f7;
+    background-size: cover;
+    color: rgb(245,245,245);
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  .main-content {
+    display: flex;
+    flex: 1;
+  }
+
+  .counterDown {
+    margin: auto;
+  }
+
+  .counterDown h1 {
+    font-size: 4rem;
+  }
+
+
+  hr {
+    background-color: #7055cb;
+  }
+
+  #demo {
+    display: flex;
+    flex-direction: row;
+    font-size: 1.6rem;
+  }
+
+  #jours {
+    font-family: "Roboto Mono", sans-serif;
+    font-size: 4rem;
+    height: 10rem;
+    margin-right: 1rem;
+    width: 8rem;
+  }
+
+  #heures {
+    font-family: "Roboto Mono", sans-serif;
+    font-size: 4rem;
+    height: 10rem;
+    margin-right: 1rem;
+    width: 8rem;
+  }
+
+  #minutes {
+    font-family: "Roboto Mono", sans-serif;
+    font-size: 4rem;
+    height: 10rem;
+    margin-right: 1rem;
+    width: 8rem;
+  }
+
+  #secondes {
+    font-family: "Roboto Mono", sans-serif;
+    font-size: 4rem;
+    height: 10rem;
+    margin: auto;
+    width: 8rem;
+  }
+
+  #infos {
+    color: #7055cb;
+    display: flex;
+    flex-direction: row;
+    font-size: 1.6rem;
+  }
+
+  .infos-jours {
+    font-family: "Roboto Mono", sans-serif;
+    margin-right: 1rem;
+    margin-top: -3rem;
+    width: 8rem;
+  }
+
+  .infos-heures {
+    font-family: "Roboto Mono", sans-serif;
+    margin-right: 1rem;
+    margin-top: -3rem;
+    width: 8rem;
+  }
+
+  .infos-minutes {
+    font-family: "Roboto Mono", sans-serif;
+    margin-right: 1rem;
+    margin-top: -3rem;
+    width: 8rem;
+  }
+
+  .infos-secondes {
+    font-family: "Roboto Mono", sans-serif;
+    margin: auto;
+    margin-top: -3rem;
+    width: 8rem;
+  }
+
+  /* Footer */
+  footer {
+    border-top: 1px solid #282828;
+    font-size: 1.3rem;
+    padding-top: 0.6rem;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+  }</style></head><body>
+<!-- BootStrap -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css?family=Roboto|Roboto+Mono" rel="stylesheet">
+
+<body>
+<div class="wrapper">
+  <!-- Content -->
+  <div class="main-content">
+    <div class="counterDown text-center">
+      <img class="logo" src="../images/logo-big.png"  style="width: 120px; height: 120px"/>
+      <h1>popi</h1>
+      <hr>
+      <div id="demo">
+        <div id="jours" class="text-center"></div>
+        <div id="heures" class="text-center"></div>
+        <div id="minutes" class="text-center"></div>
+        <div id="secondes" class="text-center"></div>
       </div>
-    </header>
-      <div class='container'>
-        <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12 insertArea">
-          <div class="wrapper-add">
-            <form  id='reviewForm'
-                   method='post'
-                   encType="multipart/form-data"
-                   action="" class="form-add-video">
-              <h3 class="form-signin-heading center">Video Ekle</h3>
-              <hr class="colorgraph"><br>
-              <input type="text" id='title' required="true" name="video" placeholder='Başlık' class="form-control" />
-              <br/>
-              <input type="text" id='tags' required="true" placeholder='Etiketler virgül ile ayırın' class="form-control" />
-              <br/>
-              <input type="file" id="video" required="true" accept="video/*" class="form-control" />
-              <br/>
-              <button class="btn btn-lg btn-primary-new btn-block" type="submit">Video Ekle</button>
-            </form>
-          </div>
-        </div>
-        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12 trendArea wrapper-add">
-          <h3 class="form-signin-heading">Öne Çıkarılan Videolar</h3>
-          <hr class="colorgraph"><br>
-          <div id="promoted-videos">
-          </div>
-        </div>
-        <h4 class="col-lg-12 col-md-12 col-sm-12 col-xs-12 center big-text">Videolar</h4>
-        <div id='reviews'></div>
-        <div class="pcontainer" id="progress-container">
-          <div class="loader" id="progress"></div>
-        </div>
+      <div id="infos">
+        <div class="infos-jours">Gün</div>
+        <div class="infos-heures">Saat</div>
+        <div class="infos-minutes">Dakika</div>
+        <div class="infos-secondes">Saniye</div>
       </div>
-      <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-      <script src="https://sdk.amazonaws.com/js/aws-sdk-2.196.0.min.js"></script>
-      <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
-      <script src="javascripts/main.js"></script>
-      <script src="javascripts/progressbar.js"></script>
-      <link href="//fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
-    </body>
-</html>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="text-center">
+    <p style="color: #7055cb">Copyright Happycoderz - <span id="annee"></span> © Tüm hakları saklıdır. </p>
+  </footer>
+</div>
+
+<!-- JavaScript -->
+<script type="text/javascript">
+    // Date de fin
+    var countDownDate = new Date('Mar 15, 2018 00:00:00').getTime();
+
+    // Update toutes les 1 secondes
+    var x = setInterval(function() {
+
+        // Récupération de la date du jour
+        var now = new Date().getTime();
+
+        // Calcul de la distance entre aujourd'hui et la fin
+        var distance = countDownDate - now;
+
+        //Calcul des temps
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+
+        var hours = Math.floor ((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        // Affichage du résultat dans l'id=demo
+        document.getElementById("jours").innerHTML = days;
+        document.getElementById("heures").innerHTML = hours;
+        document.getElementById("minutes").innerHTML = minutes;
+        document.getElementById("secondes").innerHTML = seconds;
+
+        // On stylise les éléments
+        document.getElementById("jours").style.backgroundColor = 'rgba(112,85,203,0.2)';
+        document.getElementById("heures").style.backgroundColor = 'rgba(112,85,203,0.2)';
+        document.getElementById("minutes").style.backgroundColor = 'rgba(112,85,203,0.2)';
+        document.getElementById("secondes").style.backgroundColor = 'rgba(112,85,203,0.2)';
+
+        document.getElementById("jours").style.color = 'rgb(112, 85, 203)';
+        document.getElementById("heures").style.color = 'rgb(112, 85, 203)';
+        document.getElementById("minutes").style.color = 'rgb(112, 85, 203)';
+        document.getElementById("secondes").style.color = 'rgb(112, 85, 203)';
+
+        document.getElementById("jours").font.weight = 'bold';
+        document.getElementById("heures").font.weight = 'bold';
+        document.getElementById("minutes").font.weight = 'bold';
+        document.getElementById("secondes").font.weight = 'bold';
+
+        // Si le compteur arrive à la fin
+        if (distance < 0) {
+            clearInterval(x);
+            document.getElementById("demo").innerHTML = "EXPIRED";
+        }
+    }, 1000);
+</script>
+
+<script type="text/javascript">
+    var date = new Date();
+    var annee = date.getFullYear();
+
+    document.getElementById('annee').innerHTML = annee;
+</script>
+
+</body>
+
+</body></html>
