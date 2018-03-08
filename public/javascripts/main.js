@@ -36,7 +36,7 @@ reviewForm.addEventListener('submit', function (e) {
 
     var http = new XMLHttpRequest();
 
-    var url = "http://popiapp.com:5353/admin/upload";
+    var url = "http://popiapp.com/admin/upload";
 
     progress.style.visibility = 'visible';
 
