@@ -2,6 +2,7 @@ var express = require('express');
 var async = require('async');
 var Video = require('../models/video');
 var User = require('../models/user');
+var path    = require('path');
 var moment = require('moment');
 var _ = require('lodash');
 var AWS = require('aws-sdk');
@@ -18,6 +19,20 @@ AWS.config.update({ accessKeyId: 'AKIAJRC7DLNEHD2NRRMQ', secretAccessKey: 'IXZqi
 var s3 = new AWS.S3();
 
 var myBucket = 'popiapp-hosting-mobilehub-496562667/videos';
+
+
+router.get('/detail/:id', function(req, res, next) {
+    var videoId = req.params.id;
+    Video
+        .findOne({fbId: videoId})
+        .populate({path:'userObject', select:'name fbId gender popiPoint'})
+        .exec(function (err, video) {
+            if (err || !video) {
+                return res.status(400).send({err: 'Video bulunamadı'});
+            }
+            res.render((path.join(__dirname+'/../video-detail.ejs')), {video: video});
+        });
+});
 
 /* UPLOAD*/
 router.post('/upload', function(req, res, next) {

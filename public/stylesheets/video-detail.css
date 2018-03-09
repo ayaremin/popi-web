@@ -1,0 +1,73 @@
+@import url('https://fonts.googleapis.com/css?family=Bevan');
+@import url('https://fonts.googleapis.com/css?family=Dancing+Script');
+@import url('https://fonts.googleapis.com/css?family=Pontano+Sans');
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 32px;
+    }
+
+    h2 {
+        font-size: 24px;
+    }
+}
+
+@media (min-width: 768px) {
+    h1 {
+        font-size: 48px;
+    }
+
+    h2 {
+        font-size: 32px;
+    }
+}
+
+html,
+body {
+    height: 100%;
+    margin:0;
+    padding:0;
+}
+
+h1 {
+    font-family: 'Bevan', cursive;
+    color: #282828;
+    padding:0;
+    margin:0;
+    margin-bottom:8px;
+    margin-top:8px;
+}
+
+h2 {
+    font-family: 'Bevan', cursive;
+    color: #7555cb;
+    padding:0;
+    margin:0;
+    margin-top:16px;
+}
+
+body {
+    background-color: transparent;
+    background: url("https://i.imgur.com/Tb5NGUl.jpg") no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.embed-responsive-item {
+    max-width: 1280px;
+}
+
+.highlight {
+    font-size: 18px;
+    padding: 10px 10px 10px 10px;
+    font-family: 'Pontano Sans', cursive;
+    color: #ffffFF;
+    background-color: #7555cb;
+}
+
+.nopadding {
+    padding:0;
+}
+

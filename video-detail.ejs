@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang='en' class=''>
+<head>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <link rel="stylesheet" href="../../stylesheets/video-detail.css">
+    <meta charset='UTF-8'>
+    <meta name="robots" content="noindex">
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="row" style="height: 224px;">
+            <div class="col-md-12 col-xs-12 nopadding text-center">
+                <img class="text-center" src="../../images/logo-big.png" style="width: 120px; height: 120px"/>
+                <h2 class="text-center">POPİ</h2>
+                <h1 class="text-center"><%= video.title %></h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 col-xs-12 col-xs-offset-0 nopadding">
+                <!-- 16:9 aspect ratio -->
+                <div class="embed-responsive embed-responsive-16by9">
+                    <video class="embed-responsive-item" width="240" height="472" controls>
+                        <source src=<%= video.url %> type="video/mp4">
+                    </video>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <p></p>
+            <span class="highlight"><%= video.tags %></span>
+            <p></p>
+            <a href="https://play.google.com/store/apps/details?id=com.happycoderz.popi&referrer=utm_source%3Dwebsite%26utm_medium%3Dbadge%26utm_campaign%3Dwebsite-download"><img
+                        alt="Google Play'den alın"
+                        src="https://play.google.com/intl/en_us/badges/images/generic/tr_badge_web_generic.png"/></a>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+
