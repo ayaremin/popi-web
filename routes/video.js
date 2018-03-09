@@ -2,7 +2,7 @@ var express = require('express');
 var async = require('async');
 var Video = require('../models/video');
 var User = require('../models/user');
-var path    = require('path');
+var path = require('path');
 var moment = require('moment');
 var _ = require('lodash');
 var AWS = require('aws-sdk');
@@ -14,31 +14,31 @@ var mongoose = require('mongoose');
 
 mongoose.connect('mongodb://104.236.87.130:27017/popiDatabase');
 
-AWS.config.update({ accessKeyId: 'AKIAJRC7DLNEHD2NRRMQ', secretAccessKey: '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' });
+AWS.config.update({accessKeyId: 'AKIAJRC7DLNEHD2NRRMQ', secretAccessKey: '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'});
 
 var s3 = new AWS.S3();
 
 var myBucket = 'popiapp-hosting-mobilehub-496562667/videos';
 
 
-router.get('/detail/:id', function(req, res, next) {
+router.get('/detail/:id', function (req, res, next) {
     var videoId = req.params.id;
     Video
         .findOne({fbId: videoId})
-        .populate({path:'userObject', select:'name fbId gender popiPoint'})
+        .populate({path: 'userObject', select: 'name fbId gender popiPoint'})
         .exec(function (err, video) {
             if (err || !video) {
                 return res.status(400).send({err: 'Video bulunamadı'});
             }
-            res.render((path.join(__dirname+'/../video-detail.ejs')), {video: video});
+            res.render((path.join(__dirname + '/../video-detail.ejs')), {video: video});
         });
 });
 
 /* UPLOAD*/
-router.post('/upload', function(req, res, next) {
+router.post('/upload', function (req, res, next) {
     var video = req.body.video;
 
-    var fname =  appendToFilename(req.body.filename, new Date().getTime());
+    var fname = appendToFilename(req.body.filename, new Date().getTime());
 
 
     /*fs.writeFile(req.body.filename, req.body.encoded.split("base64,")[1], 'base64', function(err) {
@@ -65,14 +65,14 @@ router.post('/upload', function(req, res, next) {
      }
      });
      return res.status(400).send({success:false});*/
-    var params = {Bucket: myBucket, Key:fname, Body: _base64ToArrayBuffer(req.body.encoded)};
-    s3.putObject(params, function(err, data) {
+    var params = {Bucket: myBucket, Key: fname, Body: _base64ToArrayBuffer(req.body.encoded)};
+    s3.putObject(params, function (err, data) {
         console.log(data);
         if (err) {
             console.log(err);
-            return res.status(400).send({success:false});
+            return res.status(400).send({success: false});
         } else {
-            return res.status(200).send({success:true, filename:fname});
+            return res.status(200).send({success: true, filename: fname});
         }
     });
 });
@@ -84,7 +84,7 @@ function _base64ToArrayBuffer(base64) {
     return buf;
 }
 
-function appendToFilename(filename, string){
+function appendToFilename(filename, string) {
     var dotIndex = filename.lastIndexOf(".");
     if (dotIndex == -1) return filename + string;
     else return filename.substring(0, dotIndex) + string + filename.substring(dotIndex);
@@ -108,11 +108,11 @@ router.post('/', function (req, res, next) {
             var perPage = req.query.limit;
             var page = req.query.page;
             var combinedList = user.videosLiked.concat(user.videosDisliked);
-            console.log(combinedList);
             Video
-                .find({ _id: { $nin: combinedList }, isDeleted: false })
+                .find({_id: {$nin: combinedList}, isDeleted: false})
+                .sort({isPromoted: 'desc'})
                 .lean()
-                .populate({path:'userObject', select:'name fbId gender popiPoint'})
+                .populate({path: 'userObject', select: 'name fbId gender popiPoint'})
                 .skip(perPage * page)
                 .limit(perPage)
                 .exec(function (err, videos) {
@@ -128,7 +128,7 @@ router.post('/', function (req, res, next) {
             if (videoId) {
                 Video
                     .findOne({fbId: videoId})
-                    .populate({path:'userObject', select:'name fbId gender popiPoint'}) // <--
+                    .populate({path: 'userObject', select: 'name fbId gender popiPoint'}) // <--
                     .exec(function (err, video) {
                         if (err) {
                             return res.status(400).send({err: 'Video bulunamadı'});
@@ -145,7 +145,7 @@ router.post('/', function (req, res, next) {
             console.error(err);
             res.json({status: 'error', message: err.message});
         } else {
-            res.json({status: 'success', message: 'Videolar' , count: data.length, data: data});
+            res.json({status: 'success', message: 'Videolar', count: data.length, data: data});
         }
         return res;
     });
@@ -166,8 +166,8 @@ router.post('/trend', function (req, res, next) {
         },
         function (user, cb) {
             Video
-                .find({ createdAt: { $gte : now.subtract(20,'day')}, isDeleted: false })
-                .populate({path:'userObject', select:'name fbId gender popiPoint'})
+                .find({createdAt: {$gte: now.subtract(20, 'day')}, isDeleted: false})
+                .populate({path: 'userObject', select: 'name fbId gender popiPoint'})
                 .lean()
                 .exec(function (err, videos) {
                     if (err) {
@@ -180,23 +180,25 @@ router.post('/trend', function (req, res, next) {
             var scoredVideos = [];
             _.forEach(videos, function (video) {
                 var score = 0;
-                score += (video.viewCompleted / video.viewStarted)*30;
-                score += ((video.like - video.dislike)/video.viewStarted)*65;
-                score += Math.max(0,video.userObject.popiPoint/1000) * 5;
+                score += (video.viewCompleted / video.viewStarted) * 30;
+                score += ((video.like - video.dislike) / video.viewStarted) * 65;
+                score += Math.max(0, video.userObject.popiPoint / 1000) * 5;
                 video.score = score;
                 scoredVideos.push(video);
             });
 
-            cb(null, _.orderBy(scoredVideos, [function(o) {
-                return o.score
+            cb(null, _.orderBy(scoredVideos, [function (o) {
+                return !o.isPromoted;
             }, function (o) {
-                return o.viewCompleted
+                return -1 * o.score
             }, function (o) {
-                return o.like/o.dislike
+                return -1 * o.viewCompleted
+            }, function (o) {
+                return -1 * o.like / o.dislike
             }]));
         }
     )(function (err, data) {
-        var sliced = data.slice(0,30);
+        var sliced = data.slice(0, 30);
         if (err) {
             console.error(err);
             res.json({status: 'error', message: err.message});
