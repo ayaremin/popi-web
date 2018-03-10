@@ -12,6 +12,7 @@ var sch = new Schema({
     education: String,
     name: String,
     birthDate: String,
+    unread: { type: Number, default: 0 },
     gender: Number,
     profilePicture: String,
     popiPoint: Number,
