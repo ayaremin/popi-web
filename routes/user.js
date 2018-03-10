@@ -20,7 +20,6 @@ router.post('/interactions', function (req, res, next) {
     var perPage = 50;
     var page = req.query.page;
     var user = req.body.user;
-    var myUser = req.body.myuser;
 
     var query = {
         whose: user,
@@ -37,7 +36,7 @@ router.post('/interactions', function (req, res, next) {
             if (err) {
                 return res.status(400).send({err: 'Etkileşim bulunamadı'});
             }
-            return res.json({status: 'success', message: 'Interactions', count: data.length, data: data, extra: user});
+            return res.json({status: 'success', message: 'Interactions', count: data.length, data: data});
         });
 });
 
