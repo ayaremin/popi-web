@@ -73,12 +73,15 @@ function saveInteractionToMongo(data, key) {
             });
         },
         function (user, cb) {
-            Video.findOne({fbId: data.post}, function (err, video) {
-                if (err) {
-                    return;
-                }
-                cb(null, user, video);
-            });
+            Video
+                .findOne({fbId: data.post})
+                .populate({path: 'userObject', select: 'name fbId gender popiPoint'})
+                .exec(function (err, video) {
+                    if (err) {
+                        return;
+                    }
+                    cb(null, user, video);
+                });
         }
     )(function (err, user, video) {
 
@@ -96,18 +99,26 @@ function saveInteractionToMongo(data, key) {
 
         if (data.type === 2) {
             User.update(
-                { fbId: user.fbId },
-                { $push: { videosLiked: video._id } },
+                {fbId: user.fbId},
+                {$push: {videosLiked: video._id}},
                 function (err, data) {
-                    //do nothing
+                    usersReference.child('unread').once(function (count) {
+                        var number;
+                        number = (count) ? (count + 1) : 1;
+                        usersReference.child(video.userObject.fbId).child('unread').setValue(number);
+                    });
                 }
             );
         } else if (data.type === 3) {
             User.update(
-                { fbId: user.fbId },
-                { $push: { videosDisliked: video._id } },
+                {fbId: user.fbId},
+                {$push: {videosDisliked: video._id}},
                 function (err, data) {
-                    //do nothing
+                    usersReference.child('unread').once(function (count) {
+                        var number;
+                        number = (count) ? (count + 1) : 1;
+                        usersReference.child(video.userObject.fbId).child('unread').setValue(number);
+                    });
                 }
             );
         }
