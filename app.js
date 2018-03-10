@@ -41,7 +41,7 @@ app.use(express.static('public'));
 
 
 app.use('/', index);
-app.use('/users', users);
+app.use('/user', users);
 app.use('/admin', admin);
 app.use('/video', video);
 
