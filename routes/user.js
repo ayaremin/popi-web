@@ -12,11 +12,12 @@ router.post('/interactions', function (req, res, next) {
         whose: user,
         $or: [{type: 2}, {type: 3}]
     };
-    console.log(query);
+
     Interaction
         .find(query)
         .lean()
-        .populate ({path: 'video', select: 'title'},{path: 'video', select: 'title'})
+        .populate ({path: 'video', select: 'title'})
+        .populate ({path: 'userObject', select: 'fbId name education name birthdate popiPoint'})
         .skip(perPage * page)
         .exec(function (err, data) {
             if (err) {
