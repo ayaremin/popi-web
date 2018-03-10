@@ -103,16 +103,7 @@ function saveInteractionToMongo(data, key) {
                 {fbId: user.fbId},
                 {$push: {videosLiked: video._id}},
                 function (err, data) {
-                    usersReference.child(video.userObject.fbId).child('unread').once('value',function (count) {
-                        var number;
-                        if (_.isNumber(count)) {
-                            number = count;
-                        } else {
-                            number = 0;
-                        }
-                        number ++;
-                        usersReference.child(video.userObject.fbId).child('unread').set(number);
-                    });
+
                 }
             );
         } else if (data.type === 3) {
@@ -120,11 +111,7 @@ function saveInteractionToMongo(data, key) {
                 {fbId: user.fbId},
                 {$push: {videosDisliked: video._id}},
                 function (err, data) {
-                    usersReference.child(video.userObject.fbId).child('unread').once('value',function (count) {
-                        var number;
-                        number = (count) ? (count + 1) : 1;
-                        usersReference.child(video.userObject.fbId).child('unread').set(number);
-                    });
+
                 }
             );
         }
