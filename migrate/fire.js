@@ -97,7 +97,6 @@ function saveInteractionToMongo(data, key) {
         intData.fbId = key;
         intData.user = user.fbId;
         intData.post = video.fbId;
-
         if (data.type === 2) {
             User.update(
                 {fbId: user.fbId},
