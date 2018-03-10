@@ -30,7 +30,7 @@ router.post('/interactions', function (req, res, next) {
     Interaction
         .find(query)
         .populate ({path: 'video', select: 'title'})
-        .populate ({path: 'userObject', select: 'fbId name education name birthdate popiPoint'})
+        .populate ({path: 'userObject', select: 'fbId name education name birthdate popiPoint profilePicture'})
         .lean()
         .skip(perPage * page)
         .exec(function (err, data) {
