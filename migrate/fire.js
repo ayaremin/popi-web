@@ -1,6 +1,7 @@
 var firebase = require("firebase");
 var Video = require('../models/video');
 var User = require('../models/user');
+var _ = require('lodash');
 var Interaction = require('../models/interaction');
 var async = require('async');
 
@@ -102,9 +103,14 @@ function saveInteractionToMongo(data, key) {
                 {fbId: user.fbId},
                 {$push: {videosLiked: video._id}},
                 function (err, data) {
-                    usersReference.child('unread').once(function (count) {
+                    usersReference.child(video.userObject.fbId).child('unread').once('value',function (count) {
                         var number;
-                        number = (count) ? (count + 1) : 1;
+                        if (_.isNumber(count)) {
+                            number = count;
+                        } else {
+                            number = 0;
+                        }
+                        number ++;
                         usersReference.child(video.userObject.fbId).child('unread').set(number);
                     });
                 }
@@ -114,7 +120,7 @@ function saveInteractionToMongo(data, key) {
                 {fbId: user.fbId},
                 {$push: {videosDisliked: video._id}},
                 function (err, data) {
-                    usersReference.child('unread').once(function (count) {
+                    usersReference.child(video.userObject.fbId).child('unread').once('value',function (count) {
                         var number;
                         number = (count) ? (count + 1) : 1;
                         usersReference.child(video.userObject.fbId).child('unread').set(number);
