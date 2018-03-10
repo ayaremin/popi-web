@@ -29,7 +29,7 @@ router.post('/interactions', function (req, res, next) {
         .find(query)
         .populate ({path: 'video', select: 'title'})
         .populate ({path: 'userObject', select: 'fbId name education name birthdate popiPoint profilePicture'})
-        .select ('type userObject video createdAt fbId')
+        .select ('type userObject video createdAt fbId post user')
         .skip(perPage * page)
         .exec(function (err, data) {
             if (err) {
