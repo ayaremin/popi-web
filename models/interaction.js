@@ -12,6 +12,7 @@ var sch = new Schema({
     fbId: String,
     post: { type: String, ref: 'Video' },
     user: { type: String, ref: 'User' },
+    whose : String,
     createdAt: Date,
 });
 

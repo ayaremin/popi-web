@@ -8,7 +8,7 @@ var bodyParser = require('body-parser');
 var session = require('client-sessions');
 
 var index = require('./routes/index');
-var users = require('./routes/users');
+var users = require('./routes/user');
 var admin = require('./routes/admin');
 var video = require('./routes/video');
 
