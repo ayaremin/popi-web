@@ -2,11 +2,25 @@ var express = require('express');
 var router = express.Router();
 var async = require('async');
 var Interaction = require('../models/interaction');
+var User = require('../models/user');
+
+router.post('/', function (req, res, next) {
+    User
+        .findOne ({fbId: req.body.user})
+        .lean()
+        .exec(function (err, user) {
+            if (err || !user) {
+                return res.status(400).send({err: 'Kullanıcı bulunamadı'});
+            }
+            return res.json({status: 'success', message: 'User Detail', count: 1, data: user});
+        });
+});
 
 router.post('/interactions', function (req, res, next) {
     var perPage = 50;
     var page = req.query.page;
     var user = req.body.user;
+    var myUser = req.body.myuser;
 
     var query = {
         whose: user,
@@ -15,15 +29,15 @@ router.post('/interactions', function (req, res, next) {
 
     Interaction
         .find(query)
-        .lean()
         .populate ({path: 'video', select: 'title'})
         .populate ({path: 'userObject', select: 'fbId name education name birthdate popiPoint'})
+        .lean()
         .skip(perPage * page)
         .exec(function (err, data) {
             if (err) {
                 return res.status(400).send({err: 'Etkileşim bulunamadı'});
             }
-            return res.json({status: 'success', message: 'Interactions', count: data.length, data: data});
+            return res.json({status: 'success', message: 'Interactions', count: data.length, data: data, extra: user});
         });
 });
 

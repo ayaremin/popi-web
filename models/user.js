@@ -13,6 +13,7 @@ var sch = new Schema({
     name: String,
     birthDate: String,
     unread: { type: Number, default: 0 },
+    isPremium: { type: Boolean, default: false },
     gender: Number,
     profilePicture: String,
     popiPoint: Number,
