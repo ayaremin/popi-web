@@ -7,7 +7,6 @@ var User = require('../models/user');
 router.post('/', function (req, res, next) {
     User
         .findOne ({fbId: req.body.user})
-        .lean()
         .exec(function (err, user) {
             if (err || !user) {
                 return res.status(400).send({err: 'Kullanıcı bulunamadı'});
@@ -30,7 +29,7 @@ router.post('/interactions', function (req, res, next) {
         .find(query)
         .populate ({path: 'video', select: 'title'})
         .populate ({path: 'userObject', select: 'fbId name education name birthdate popiPoint profilePicture'})
-        .lean()
+        .select ('type userObject video createdAt fbId')
         .skip(perPage * page)
         .exec(function (err, data) {
             if (err) {
