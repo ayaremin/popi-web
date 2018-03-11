@@ -15,7 +15,10 @@ var sch = new Schema({
     url: String,
     ownerId: String,
     videoOwner: String,
-    createdAt: Date,
+    createdAt: {
+        type: Date,
+        default: Date.now
+    },
     user: String,
     tags: Array,
     isPromoted: {

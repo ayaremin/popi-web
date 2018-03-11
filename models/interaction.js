@@ -13,7 +13,10 @@ var sch = new Schema({
     post: { type: String },
     user: { type: String },
     whose : String,
-    createdAt: Date,
+    createdAt: {
+        type: Date,
+        default: Date.now
+    }
 });
 
 sch.virtual('userObject', {
