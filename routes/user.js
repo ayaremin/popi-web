@@ -19,9 +19,9 @@ router.put('/', function (req, res, next) {
     var user = new User(req.body);
 
     var userData = user.toObject();
-
     delete userData._id;
-
+    delete userData.videosLiked;
+    delete userData.videosDisliked;
     User.update({fbId: req.body.fbId}, {$set: userData}, {upsert: true}, function (err, data) {
         if (err) {
             return;
