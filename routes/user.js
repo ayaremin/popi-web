@@ -4,7 +4,7 @@ var async = require('async');
 var Interaction = require('../models/interaction');
 var User = require('../models/user');
 var Video = require('../models/video');
-
+var fcm = require('../utils/notification');
 
 router.post('/', function (req, res, next) {
     User
@@ -165,6 +165,7 @@ router.post('/follow', function (req, res, next) {
             console.error(err);
             res.json({status: 'error', message: err.message});
         } else {
+            fcm.sendNotification(followee.firebaseToken, 'Yeni takipçi +1', follower.name + ' sizi takip etmeye başladı');
             res.json({status: 'success', message: 'Follow', data: {follower:follower, followee:followee}});
         }
         return res;
@@ -215,6 +216,7 @@ router.post('/unfollow', function (req, res, next) {
             console.error(err);
             res.json({status: 'error', message: err.message});
         } else {
+            fcm.sendNotification(followee.firebaseToken, ':( Bizden duymuş olma', follower.name + ' sizi takip etmeyi bıraktı');
             res.json({status: 'success', message: 'Follow', data: {follower:follower, followee:followee}});
         }
         return res;
