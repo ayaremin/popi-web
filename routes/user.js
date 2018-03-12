@@ -3,6 +3,8 @@ var router = express.Router();
 var async = require('async');
 var Interaction = require('../models/interaction');
 var User = require('../models/user');
+var Video = require('../models/video');
+
 
 router.post('/', function (req, res, next) {
     User
@@ -16,13 +18,7 @@ router.post('/', function (req, res, next) {
 });
 
 router.put('/', function (req, res, next) {
-    var user = new User(req.body);
-
-    var userData = user.toObject();
-    delete userData._id;
-    delete userData.videosLiked;
-    delete userData.videosDisliked;
-    User.update({fbId: req.body.fbId}, {$set: userData}, {upsert: true}, function (err, data) {
+    User.update({fbId: req.body.fbId}, {$set: req.body}, {upsert: true}, function (err, data) {
         if (err) {
             return;
         }
@@ -59,6 +55,47 @@ router.post('/interactions', function (req, res, next) {
             }
             return res.json({status: 'success', message: 'Interactions', count: data.length, data: data});
         });
+});
+
+router.post ('/videos', function (req, res, next) {
+    var userId = req.body.user;
+
+    async.seq(
+        function (cb) {
+            User.findOne({fbId: userId}, function (err, user) {
+                if (err) {
+                    return res.status(400).send({err: 'Kullanıcı bulunamadı'});
+                }
+                cb(null, user);
+            });
+        },
+        function (user, cb) {
+            var perPage = req.query.limit;
+            var page = req.query.page;
+            Video
+                .find({user: user.fbId, isDeleted: false})
+                .sort({createdAt: 'desc'})
+                .skip(perPage * page)
+                .limit(perPage)
+                .populate({path: 'userObject', select: 'name fbId gender popiPoint', options: { lean: true}})
+                .lean()
+                .exec(function (err, videos) {
+                    if (err) {
+                        console.log(err);
+                        return res.status(400).send({err: 'Videolar bulunamadı'});
+                    }
+                    cb(null, videos);
+                });
+        }
+    )(function (err, data) {
+        if (err) {
+            console.error(err);
+            res.json({status: 'error', message: err.message});
+        } else {
+            res.json({status: 'success', message: 'Videolar', count: data.length, data: data});
+        }
+        return res;
+    });
 });
 
 /* GET users listing. */
