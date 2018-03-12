@@ -128,6 +128,10 @@ function saveUserToMongo(data, key) {
     var userData = user.toObject();
 
     delete userData._id;
+    delete userData.followers;
+    delete userData.followees;
+    delete userData.videosLiked;
+    delete userData.videosDisliked;
     userData.fbId = key;
 
     User.update({fbId: key}, {$set: userData}, {upsert: true}, function (err, data) {
