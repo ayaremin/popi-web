@@ -17,6 +17,29 @@ router.post('/', function (req, res, next) {
         });
 });
 
+router.get('/detail/:id', function (req, res, next) {
+    async.seq (
+        function (cb) {
+            User
+                .findOne ({fbId: req.params.id})
+                .exec(function (err, user) {
+                    if (err || !user) {
+                        return res.status(400).send({err: 'Kullanıcı bulunamadı'});
+                    }
+                    cb (null, user);
+                });
+        }
+    )(function (err, data) {
+        if (err) {
+            console.error(err);
+            res.json({status: 'error', message: err.message});
+        } else {
+            res.json({status: 'success', message: 'Kullanıcı', count: 1, data: data});
+        }
+        return res;
+    });
+});
+
 router.put('/', function (req, res, next) {
     User.update({fbId: req.body.fbId}, {$set: req.body}, {upsert: true}, function (err, data) {
         if (err) {

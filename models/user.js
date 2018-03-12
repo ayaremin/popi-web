@@ -17,6 +17,8 @@ var sch = new Schema({
     gender: Number,
     profilePicture: String,
     popiPoint: Number,
+    followees: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+    followers: [{ type: Schema.Types.ObjectId, ref: 'User' }],
     videosLiked: [{ type: Schema.Types.ObjectId, ref: 'Video' }],
     videosDisliked: [{ type: Schema.Types.ObjectId, ref: 'Video' }],
     createdAt: {
