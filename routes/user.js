@@ -121,9 +121,104 @@ router.post ('/videos', function (req, res, next) {
     });
 });
 
-/* GET users listing. */
-router.get('/', function (req, res, next) {
-    res.send('respond with a resource');
+router.post('/follow', function (req, res, next) {
+    var follower = req.body.follower;
+    var followee = req.body.followee;
+
+    async.seq(
+        function (cb) {
+            User.findOne({fbId: follower}, function (err, follower) {
+                if (err) {
+                    return res.status(400).send({err: 'Takip eden Kullanıcı bulunamadı'});
+                }
+                cb(null, follower);
+            });
+        },
+        function (follower, cb) {
+            User.findOne({fbId: followee}, function (err, followee) {
+                if (err) {
+                    return res.status(400).send({err: 'Takip edilen Kullanıcı bulunamadı'});
+                }
+                cb(null, follower, followee);
+            });
+        },
+        function(follower, followee, cb) {
+            User.update(
+                {fbId: follower.fbId},
+                {$addToSet: {followees: followee._id}},
+                function (err, data) {
+                    cb (null, follower, followee);
+                }
+            );
+        },
+        function(follower, followee, cb) {
+            User.update(
+                {fbId: followee.fbId},
+                {$addToSet: {followers: follower._id}},
+                function (err, data) {
+                    cb (null, follower, followee);
+                }
+            );
+        }
+    )(function (err, follower, followee) {
+        if (err) {
+            console.error(err);
+            res.json({status: 'error', message: err.message});
+        } else {
+            res.json({status: 'success', message: 'Follow', data: {follower:follower, followee:followee}});
+        }
+        return res;
+    });
+});
+
+router.post('/unfollow', function (req, res, next) {
+    var follower = req.body.follower;
+    var followee = req.body.followee;
+
+    async.seq(
+        function (cb) {
+            User.findOne({fbId: follower}, function (err, follower) {
+                if (err) {
+                    return res.status(400).send({err: 'Takip eden Kullanıcı bulunamadı'});
+                }
+                cb(null, follower);
+            });
+        },
+        function (follower, cb) {
+            User.findOne({fbId: followee}, function (err, followee) {
+                if (err) {
+                    return res.status(400).send({err: 'Takip edilen Kullanıcı bulunamadı'});
+                }
+                cb(null, follower, followee);
+            });
+        },
+        function(follower, followee, cb) {
+            User.update(
+                {fbId: follower.fbId},
+                {$pull: {followees: followee._id}},
+                function (err, data) {
+                    cb (null, follower, followee);
+                }
+            );
+        },
+        function(follower, followee, cb) {
+            User.update(
+                {fbId: followee.fbId},
+                {$pull: {followers: follower._id}},
+                function (err, data) {
+                    cb (null, follower, followee);
+                }
+            );
+        }
+    )(function (err, follower, followee) {
+        if (err) {
+            console.error(err);
+            res.json({status: 'error', message: err.message});
+        } else {
+            res.json({status: 'success', message: 'Follow', data: {follower:follower, followee:followee}});
+        }
+        return res;
+    });
 });
 
 module.exports = router;

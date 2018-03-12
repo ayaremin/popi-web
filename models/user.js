@@ -16,6 +16,7 @@ var sch = new Schema({
     isPremium: { type: Boolean, default: false },
     gender: Number,
     profilePicture: String,
+    firebaseToken: String,
     popiPoint: Number,
     followees: [{ type: Schema.Types.ObjectId, ref: 'User' }],
     followers: [{ type: Schema.Types.ObjectId, ref: 'User' }],
