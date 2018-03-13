@@ -100,7 +100,7 @@ function saveInteractionToMongo(data, key) {
         if (data.type === 2) {
             User.update(
                 {fbId: user.fbId},
-                {$push: {videosLiked: video._id}},
+                {$addToSet: {videosLiked: video._id}},
                 function (err, data) {
 
                 }
@@ -108,7 +108,7 @@ function saveInteractionToMongo(data, key) {
         } else if (data.type === 3) {
             User.update(
                 {fbId: user.fbId},
-                {$push: {videosDisliked: video._id}},
+                {$addToSet: {videosDisliked: video._id}},
                 function (err, data) {
 
                 }

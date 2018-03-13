@@ -295,7 +295,7 @@ var sendNotification = function (follower, followee, type) {
     interaction.whose = follower.fbId;
     delete interaction._id;
     interactionsReference.child(key).set(interaction.toObject());
-    interactionsReference.child(followee.fbId).child('unreadCount').transaction(function(current) {
+    usersReference.child(followee.fbId).child('unread').transaction(function(current) {
         return (current || 0) + 1;
     });
 };
