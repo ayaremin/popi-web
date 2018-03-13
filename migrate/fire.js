@@ -87,7 +87,6 @@ function saveInteractionToMongo(data, key) {
     )(function (err, user, video) {
 
         var interaction = new Interaction(data);
-
         var intData = interaction.toObject();
 
         delete intData.user;
