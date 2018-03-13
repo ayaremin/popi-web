@@ -289,12 +289,13 @@ var sendNotification = function (follower, followee, type) {
     }
 
     var key = interactionsReference.push().key;
-    interaction.type =  typeNo;
-    interaction.fbId = key;
-    interaction.user = followee.fbId;
-    interaction.whose = follower.fbId;
-    delete interaction._id;
-    interactionsReference.child(key).set(interaction.toObject());
+    var interactionObj = interaction.toObject();
+    interactionObj.type =  typeNo;
+    interactionObj.fbId = key;
+    interactionObj.user = followee.fbId;
+    interactionObj.whose = follower.fbId;
+    delete interactionObj._id;
+    interactionsReference.child(key).set(interactionObj);
     usersReference.child(followee.fbId).child('unread').transaction(function(current) {
         return (current || 0) + 1;
     });
