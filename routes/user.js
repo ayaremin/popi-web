@@ -292,8 +292,8 @@ var sendNotification = function (follower, followee, type) {
     var interactionObj = interaction.toObject();
     interactionObj.type =  typeNo;
     interactionObj.fbId = key;
-    interactionObj.user = followee.fbId;
-    interactionObj.whose = follower.fbId;
+    interactionObj.user = follower.fbId;
+    interactionObj.whose = followee.fbId;
     delete interactionObj._id;
     interactionsReference.child(key).set(interactionObj);
     usersReference.child(followee.fbId).child('unread').transaction(function(current) {
