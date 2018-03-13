@@ -5,6 +5,21 @@ var Interaction = require('../models/interaction');
 var User = require('../models/user');
 var Video = require('../models/video');
 var fcm = require('../utils/notification');
+var firebase = require('firebase');
+
+var config = {
+    apiKey: 'AIzaSyCbcgJi0iXxJRJTL1pG2FOKjeF0qaIU3cQ',
+    authDomain: 'popi-3b329.firebaseio.com/',
+    databaseURL: 'https://popi-3b329.firebaseio.com/',
+    storageBucket: ''
+};
+
+firebase.initializeApp(config);
+var db = firebase.database();
+
+var videosReference = db.ref('/videos');
+var usersReference = db.ref('/users');
+var interactionsReference = db.ref('/interactions');
 
 router.post('/', function (req, res, next) {
     User
@@ -63,7 +78,7 @@ router.post('/interactions', function (req, res, next) {
 
     var query = {
         whose: user,
-        $or: [{type: 2}, {type: 3}]
+        $or: [{type: 2}, {type: 3}, {type: 9}, {type: 10}, {type: 8}]
     };
 
     Interaction
@@ -165,7 +180,7 @@ router.post('/follow', function (req, res, next) {
             console.error(err);
             res.json({status: 'error', message: err.message});
         } else {
-            fcm.sendNotification(followee.firebaseToken, 'Yeni takipçi +1', follower.name + ' sizi takip etmeye başladı');
+            sendNotification(follower, followee, 'follow');
             res.json({status: 'success', message: 'Follow', data: {follower:follower, followee:followee}});
         }
         return res;
@@ -216,7 +231,7 @@ router.post('/unfollow', function (req, res, next) {
             console.error(err);
             res.json({status: 'error', message: err.message});
         } else {
-            fcm.sendNotification(followee.firebaseToken, ':( Bizden duymuş olma', follower.name + ' sizi takip etmeyi bıraktı');
+            sendNotification(follower, followee, 'unfollow');
             res.json({status: 'success', message: 'Follow', data: {follower:follower, followee:followee}});
         }
         return res;
@@ -261,5 +276,28 @@ router.post ('/videos', function (req, res, next) {
         return res;
     });
 });
+
+var sendNotification = function (follower, followee, type) {
+    var interaction = new Interaction();
+    var typeNo;
+    if (type === 'follow') {
+        typeNo = 9;
+        fcm.sendNotification(followee.firebaseToken, '🎊 🎉 Wohooo yeni takipçi +1', follower.name + ' seni takip etmeye başladı');
+    } else {
+        typeNo = 10;
+        fcm.sendNotification(followee.firebaseToken, '💔☹️ Bizden duymuş olma', follower.name + ' seni takip etmeyi bıraktı');
+    }
+
+    var key = interactionsReference.push().key;
+    interaction.type =  typeNo;
+    interaction.fbId = key;
+    interaction.user = followee.fbId;
+    interaction.whose = follower.fbId;
+    delete interaction._id;
+    interactionsReference.child(key).set(interaction.toObject());
+    interactionsReference.child(followee.fbId).child('unreadCount').transaction(function(current) {
+        return (current || 0) + 1;
+    });
+};
 
 module.exports = router;
