@@ -23,7 +23,7 @@ var interactionsReference = db.ref('/interactions');
 
 router.post('/', function (req, res, next) {
     User
-        .findOne ({fbId: req.body.user})
+        .findOne({fbId: req.body.user})
         .exec(function (err, user) {
             if (err || !user) {
                 return res.status(400).send({err: 'Kullanıcı bulunamadı'});
@@ -33,15 +33,15 @@ router.post('/', function (req, res, next) {
 });
 
 router.get('/detail/:id', function (req, res, next) {
-    async.seq (
+    async.seq(
         function (cb) {
             User
-                .findOne ({fbId: req.params.id})
+                .findOne({fbId: req.params.id})
                 .exec(function (err, user) {
                     if (err || !user) {
                         return res.status(400).send({err: 'Kullanıcı bulunamadı'});
                     }
-                    cb (null, user);
+                    cb(null, user);
                 });
         }
     )(function (err, data) {
@@ -61,7 +61,7 @@ router.put('/', function (req, res, next) {
             return;
         }
         User
-            .findOne ({fbId: req.body.fbId})
+            .findOne({fbId: req.body.fbId})
             .exec(function (err, user) {
                 if (err || !user) {
                     return res.status(400).send({err: 'Kullanıcı bulunamadı'});
@@ -83,9 +83,9 @@ router.post('/interactions', function (req, res, next) {
 
     Interaction
         .find(query)
-        .populate ({path: 'video', select: 'title'})
-        .populate ({path: 'userObject', select: 'fbId name education name birthdate popiPoint profilePicture'})
-        .select ('type userObject video createdAt fbId post user')
+        .populate({path: 'video', select: 'title'})
+        .populate({path: 'userObject', select: 'fbId name education name birthdate popiPoint profilePicture'})
+        .select('type userObject video createdAt fbId post user')
         .sort({createdAt: 'desc'})
         .skip(perPage * page)
         .exec(function (err, data) {
@@ -96,7 +96,7 @@ router.post('/interactions', function (req, res, next) {
         });
 });
 
-router.post ('/videos', function (req, res, next) {
+router.post('/videos', function (req, res, next) {
     var userId = req.body.user;
 
     async.seq(
@@ -116,7 +116,7 @@ router.post ('/videos', function (req, res, next) {
                 .sort({createdAt: 'desc'})
                 .skip(perPage * page)
                 .limit(perPage)
-                .populate({path: 'userObject', select: 'name fbId gender popiPoint', options: { lean: true}})
+                .populate({path: 'userObject', select: 'name fbId gender popiPoint', options: {lean: true}})
                 .lean()
                 .exec(function (err, videos) {
                     if (err) {
@@ -158,21 +158,21 @@ router.post('/follow', function (req, res, next) {
                 cb(null, follower, followee);
             });
         },
-        function(follower, followee, cb) {
+        function (follower, followee, cb) {
             User.update(
                 {fbId: follower.fbId},
                 {$addToSet: {followees: followee._id}},
                 function (err, data) {
-                    cb (null, follower, followee);
+                    cb(null, follower, followee);
                 }
             );
         },
-        function(follower, followee, cb) {
+        function (follower, followee, cb) {
             User.update(
                 {fbId: followee.fbId},
                 {$addToSet: {followers: follower._id}},
                 function (err, data) {
-                    cb (null, follower, followee);
+                    cb(null, follower, followee);
                 }
             );
         }
@@ -182,7 +182,7 @@ router.post('/follow', function (req, res, next) {
             res.json({status: 'error', message: err.message});
         } else {
             sendNotification(follower, followee, 'follow');
-            res.json({status: 'success', message: 'Follow', data: {follower:follower, followee:followee}});
+            res.json({status: 'success', message: 'Follow', data: {follower: follower, followee: followee}});
         }
         return res;
     });
@@ -209,21 +209,21 @@ router.post('/unfollow', function (req, res, next) {
                 cb(null, follower, followee);
             });
         },
-        function(follower, followee, cb) {
+        function (follower, followee, cb) {
             User.update(
                 {fbId: follower.fbId},
                 {$pull: {followees: followee._id}},
                 function (err, data) {
-                    cb (null, follower, followee);
+                    cb(null, follower, followee);
                 }
             );
         },
-        function(follower, followee, cb) {
+        function (follower, followee, cb) {
             User.update(
                 {fbId: followee.fbId},
                 {$pull: {followers: follower._id}},
                 function (err, data) {
-                    cb (null, follower, followee);
+                    cb(null, follower, followee);
                 }
             );
         }
@@ -233,13 +233,13 @@ router.post('/unfollow', function (req, res, next) {
             res.json({status: 'error', message: err.message});
         } else {
             sendNotification(follower, followee, 'unfollow');
-            res.json({status: 'success', message: 'Follow', data: {follower:follower, followee:followee}});
+            res.json({status: 'success', message: 'Follow', data: {follower: follower, followee: followee}});
         }
         return res;
     });
 });
 
-router.post ('/videos', function (req, res, next) {
+router.post('/videos', function (req, res, next) {
     var userId = req.body.user;
 
     async.seq(
@@ -257,7 +257,7 @@ router.post ('/videos', function (req, res, next) {
                 .sort({createdAt: 'desc'})
                 .skip(perPage * page)
                 .limit(perPage)
-                .populate({path: 'userObject', select: 'name fbId gender popiPoint', options: { lean: true}})
+                .populate({path: 'userObject', select: 'name fbId gender popiPoint', options: {lean: true}})
                 .lean()
                 .exec(function (err, videos) {
                     if (err) {
@@ -278,6 +278,33 @@ router.post ('/videos', function (req, res, next) {
     });
 });
 
+router.post('/followers', function (req, res, next) {
+    var user = req.body.user;
+    User
+        .findOne({fbId: user})
+        .populate('followers')
+        .exec(function (err, user) {
+            if (err || !user) {
+                return res.status(400).send({err: 'Kullanıcı bulunamadı'});
+            }
+            res.json({status: 'success', message: 'Takipçiler', count: user.followers.length, data: user.followers});
+        });
+});
+
+router.post('/followees', function (req, res, next) {
+    var user = req.body.user;
+
+    User
+        .findOne({fbId: user})
+        .populate('followees')
+        .exec(function (err, user) {
+            if (err || !user) {
+                return res.status(400).send({err: 'Kullanıcı bulunamadı'});
+            }
+            res.json({status: 'success', message: 'Takip Edenler', count: user.followees.length, data: user.followees});
+        });
+});
+
 var sendNotification = function (follower, followee, type) {
     var interaction = new Interaction();
     var typeNo;
@@ -291,13 +318,13 @@ var sendNotification = function (follower, followee, type) {
 
     var key = interactionsReference.push().key;
     var interactionObj = interaction.toObject();
-    interactionObj.type =  typeNo;
+    interactionObj.type = typeNo;
     interactionObj.fbId = key;
     interactionObj.user = follower.fbId;
     interactionObj.whose = followee.fbId;
     delete interactionObj._id;
     interactionsReference.child(key).set(interactionObj);
-    usersReference.child(followee.fbId).child('unread').transaction(function(current) {
+    usersReference.child(followee.fbId).child('unread').transaction(function (current) {
         return (current || 0) + 1;
     });
 };
