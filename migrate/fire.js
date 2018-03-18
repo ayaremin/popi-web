@@ -92,6 +92,7 @@ function saveInteractionToMongo(data, key) {
         delete intData.user;
         delete intData.post;
         delete intData._id;
+        delete intData.createdAt;
 
         intData.fbId = key;
         intData.user = user.fbId;
