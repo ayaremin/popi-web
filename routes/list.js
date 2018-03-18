@@ -100,7 +100,7 @@ router.post('/overall/day/:range', function (req, res, next) {
 
                 User
                     .findOne({fbId: interaction})
-                    .select('name profilePicture popiPoint')
+                    .select('name profilePicture popiPoint fbId')
                     .exec(function (err, user) {
                         if (err || !user) {
                             return res.status(400).send({err: 'Kullanıcı bulunamadı'});
