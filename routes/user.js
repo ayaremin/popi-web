@@ -72,6 +72,22 @@ router.put('/', function (req, res, next) {
     });
 });
 
+router.put('/preference', function (req, res, next) {
+    User.update({fbId: req.body.fbId}, {$set: {preferences: req.body.preferences}}, {upsert: true}, function (err, data) {
+        if (err) {
+            return;
+        }
+        User
+            .findOne({fbId: req.body.fbId})
+            .exec(function (err, user) {
+                if (err || !user) {
+                    return res.status(400).send({err: 'Kullanıcı bulunamadı'});
+                }
+                return res.json({status: 'success', message: 'User Detail', count: 1, data: user});
+            });
+    });
+});
+
 router.post('/interactions', function (req, res, next) {
     var perPage = 50;
     var page = req.query.page;
