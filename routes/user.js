@@ -56,6 +56,7 @@ router.get('/detail/:id', function (req, res, next) {
 });
 
 router.put('/', function (req, res, next) {
+    console.log(req.body);
     User.update({fbId: req.body.fbId}, {$set: req.body}, {upsert: true}, function (err, data) {
         if (err) {
             return;
