@@ -25,6 +25,13 @@ var sch = new Schema({
     createdAt: {
         type: Date,
         default: Date.now
+    },
+    preferences: {
+        email:  { type: Boolean, default: true },
+        interaction:  { type: Boolean, default: true },
+        showEmail:  { type: Boolean, default: true },
+        showAge:  { type: Boolean, default: true },
+        showEducation:  { type: Boolean, default: true }
     }
 });
 
