@@ -13,7 +13,7 @@ var sch = new Schema({
     name: String,
     birthDate: String,
     unread: { type: Number, default: 0 },
-    isPremium: { type: Boolean, default: false },
+    isPremium: { type: Boolean, default: true },
     gender: Number,
     profilePicture: String,
     firebaseToken: String,
