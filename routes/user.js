@@ -103,7 +103,7 @@ router.post('/interactions', function (req, res, next) {
         .populate({path: 'video', select: 'title'})
         .populate({path: 'userObject', select: 'fbId name education name birthdate popiPoint profilePicture'})
         .select('type userObject video createdAt fbId post user')
-        .sort({createdAt: 'desc'})
+        .sort({createdAt: 'asc'})
         .skip(perPage * page)
         .exec(function (err, data) {
             if (err) {
