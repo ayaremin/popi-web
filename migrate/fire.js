@@ -131,7 +131,7 @@ function saveUserToMongo(data, key) {
     delete userData.followees;
     delete userData.videosLiked;
     delete userData.videosDisliked;
-    delete userData.isPremium;
+    //delete userData.isPremium;
     userData.fbId = key;
 
     User.update({fbId: key}, {$set: userData}, {upsert: true}, function (err, data) {
