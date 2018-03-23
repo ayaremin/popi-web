@@ -153,6 +153,47 @@ router.post('/videos', function (req, res, next) {
     });
 });
 
+router.post('/videos/liked', function (req, res, next) {
+    var userId = req.body.user;
+
+    async.seq(
+        function (cb) {
+            User.findOne({fbId: userId}, function (err, user) {
+                if (err) {
+                    return res.status(400).send({err: 'Kullanıcı bulunamadı'});
+                }
+                cb(null, user);
+            });
+        },
+        function (user, cb) {
+            var perPage = req.query.limit;
+            var page = req.query.page;
+            User
+                .findOne({fbId: user.fbId})
+                .sort({createdAt: 'desc'})
+                .skip(perPage * page)
+                .limit(perPage)
+                .populate({path: 'videosLiked', options: {lean: true}})
+                .lean()
+                .exec(function (err, use) {
+                    if (err) {
+                        console.log(err);
+                        return res.status(400).send({err: 'Videolar bulunamadı'});
+                    }
+                    cb(null, use.videosLiked);
+                });
+        }
+    )(function (err, data) {
+        if (err) {
+            console.error(err);
+            res.json({status: 'success', message: 'Videolar', data: []});
+        } else {
+            res.json({status: 'success', message: 'Videolar', data: data});
+        }
+        return res;
+    });
+});
+
 router.post('/follow', function (req, res, next) {
     var follower = req.body.follower;
     var followee = req.body.followee;
