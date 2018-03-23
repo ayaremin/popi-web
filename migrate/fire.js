@@ -4,6 +4,7 @@ var User = require('../models/user');
 var _ = require('lodash');
 var Interaction = require('../models/interaction');
 var async = require('async');
+var fcm = require('../utils/notification');
 
 var config = {
     apiKey: 'AIzaSyCbcgJi0iXxJRJTL1pG2FOKjeF0qaIU3cQ',
@@ -26,7 +27,7 @@ mongoose.connect(process.env.POPIDB);
 mongoose.connection.on('connected', function () {
     // after a succesful connection start listening firebase
     videosReference.on('child_added', function (data) {
-        saveVideoToMongo(data.val(), data.key);
+        saveVideoToMongoAdd(data.val(), data.key);
     });
 
     usersReference.on('child_added', function (data) {
@@ -38,7 +39,7 @@ mongoose.connection.on('connected', function () {
     });
 
     videosReference.on('child_changed', function (data) {
-        saveVideoToMongo(data.val(), data.key);
+        saveVideoToMongoChange(data.val(), data.key);
     });
 
     usersReference.on('child_changed', function (data) {
@@ -46,7 +47,7 @@ mongoose.connection.on('connected', function () {
     });
 });
 
-function saveVideoToMongo(data, key) {
+function saveVideoToMongoChange(data, key) {
     var video = new Video(data);
 
     var videoData = video.toObject();
@@ -63,6 +64,54 @@ function saveVideoToMongo(data, key) {
     });
 }
 
+function saveVideoToMongoAdd(data, key) {
+    async.seq(
+        function (cb) {
+            Video
+                .find({fbId: key})
+                .lean()
+                .exec(function (err, data) {
+                    if (err || data.length === 0) {
+                        cb();
+                    } else {
+                        return;
+                    }
+                });
+        },
+        function (cb) {
+            User.findOne({fbId: data.user.fbId})
+                .populate('followees')
+                .exec(function (err, user) {
+                    if (err || !user) {
+                        return;
+                    }
+                    async.each(user.followees, function (user, callback) {
+                        fcm.sendNotification(user.firebaseToken, user.name  + ' ' + data.title  + ' isimli yeni bir video paylaştı');
+                        callback();
+                    }, function (err) {
+                        cb();
+                    });
+
+                });
+        }
+    )(function () {
+        var video = new Video(data);
+
+        var videoData = video.toObject();
+
+        delete videoData.user;
+        delete videoData._id;
+
+        videoData.fbId = key;
+        videoData.user = data.user.fbId;
+        Video.update({fbId: key}, {$set: videoData}, {upsert: true}, function (err, data) {
+            if (err) {
+                return;
+            }
+        });
+    });
+}
+
 function saveInteractionToMongo(data, key) {
     async.seq(
         function (cb) {
@@ -70,11 +119,11 @@ function saveInteractionToMongo(data, key) {
                 .find({fbId: key})
                 .lean()
                 .exec(function (err, data) {
-                   if (err || data.length === 0) {
-                       cb();
-                   } else {
-                       return;
-                   }
+                    if (err || data.length === 0) {
+                        cb();
+                    } else {
+                        return;
+                    }
                 });
         },
         function (cb) {
