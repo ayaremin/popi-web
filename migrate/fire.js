@@ -66,6 +66,18 @@ function saveVideoToMongo(data, key) {
 function saveInteractionToMongo(data, key) {
     async.seq(
         function (cb) {
+            Interaction
+                .find({fbId: key})
+                .lean()
+                .exec(function (err, data) {
+                   if (err || data.length === 0) {
+                       cb();
+                   } else {
+                       return;
+                   }
+                });
+        },
+        function (cb) {
             User.findOne({fbId: data.user}, function (err, user) {
                 if (err) {
                     return;
