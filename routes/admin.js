@@ -41,7 +41,7 @@ router.get('/reset', function (req, res, next) {
                     if (err) {
                         return;
                     }
-                    return res.json({status: 'success', message: 'Güncelleme başarılı'});
+                    return res.json({status: 'success', message: 'Güncelleme başarılı', data:data});
                 });
             }
         )();
