@@ -86,7 +86,7 @@ function saveVideoToMongoAdd(data, key) {
                         return;
                     }
                     async.each(user.followees, function (user, callback) {
-                        fcm.sendNotification(user.firebaseToken, user.name  + ' ' + data.title  + ' isimli yeni bir video paylaştı');
+                        fcm.sendNotification(user.firebaseToken, 'Yeni Video', user.name  + ' ' + data.title  + ' isimli yeni bir video paylaştı');
                         callback();
                     }, function (err) {
                         cb();
