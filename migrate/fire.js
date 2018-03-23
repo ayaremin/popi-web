@@ -126,7 +126,6 @@ function saveInteractionToMongo(data, key) {
 function saveUserToMongo(data, key) {
     var user = new User(data);
     var userData = user.toObject();
-
     delete userData._id;
     delete userData.followers;
     delete userData.followees;
