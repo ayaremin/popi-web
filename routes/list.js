@@ -55,7 +55,7 @@ router.post('/overall/day/:range', function (req, res, next) {
     var perPage = 50;
     var page = req.query.page;
     var now = moment().startOf('day');
-    var date = now.subtract(range, 'day').toDate()
+    var date = now.subtract(range, 'day').toDate();
     async.seq(
         function (cb) {
             User.findOne({fbId: user}, function (err, user) {
