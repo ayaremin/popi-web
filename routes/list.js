@@ -132,7 +132,9 @@ router.post('/overall/day/:range', function (req, res, next) {
             console.error(err);
             res.json({status: 'error', message: err.message});
         } else {
-            res.json({status: 'success', message: 'Etkileşimler', count: data.length, data: data});
+            res.json({status: 'success', message: 'Etkileşimler', count: data.length, data: _.orderBy(data, [function (user) {
+                return -1*user.popiPoint;
+            }])});
         }
         return res;
     });
