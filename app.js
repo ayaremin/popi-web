@@ -5,7 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('client-sessions');
-
+require('dotenv').config();
 var index = require('./routes/index');
 var users = require('./routes/user');
 var admin = require('./routes/admin');
@@ -16,7 +16,7 @@ var app = express();
 
 var mongoose = require('mongoose');
 
-mongoose.connect('mongodb://104.236.87.130:27017/popiDatabase');
+mongoose.connect(process.env.POPIDB);
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
