@@ -97,7 +97,6 @@ router.post('/interactions', function (req, res, next) {
         whose: user,
         $or: [{type: 2}, {type: 3}, {type: 9}, {type: 10}, {type: 8}]
     };
-
     Interaction
         .find(query)
         .populate({path: 'video', select: 'title'})
