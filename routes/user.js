@@ -166,29 +166,30 @@ router.post('/videos/liked', function (req, res, next) {
             });
         },
         function (user, cb) {
+            console.log(user.videosLiked);
             var perPage = req.query.limit;
             var page = req.query.page;
-            User
-                .findOne({fbId: user.fbId})
+            Video
+                .find({_id: {$in: user.videosLiked}})
                 .sort({createdAt: 'desc'})
                 .skip(perPage * page)
                 .limit(perPage)
-                .populate({path: 'videosLiked', options: {lean: true}})
+                .populate({path: 'userObject', select: 'name fbId gender popiPoint', options: {lean: true}})
                 .lean()
-                .exec(function (err, use) {
+                .exec(function (err, videos) {
                     if (err) {
                         console.log(err);
                         return res.status(400).send({err: 'Videolar bulunamadı'});
                     }
-                    cb(null, use.videosLiked);
+                    cb(null, videos);
                 });
         }
     )(function (err, data) {
         if (err) {
             console.error(err);
-            res.json({status: 'success', message: 'Videolar', data: []});
+            res.json({status: 'error', message: err.message});
         } else {
-            res.json({status: 'success', message: 'Videolar', data: data});
+            res.json({status: 'success', message: 'Videolar', count: data.length, data: data});
         }
         return res;
     });
