@@ -25,7 +25,7 @@ router.post('/overall', function (req, res, next) {
         },
         function (user, cb) {
             User
-                .find()
+                .find({fbId: {$nin:['000000']}})
                 .select('name popiPoint fbId profilePicture')
                 .sort({popiPoint: 'desc'})
                 .lean()
@@ -67,6 +67,7 @@ router.post('/overall/day/:range', function (req, res, next) {
         },
         function (user, cb) {
             var query = {
+                whose: {$nin: ['000000']},
                 $or: [{type: 2}, {type: 3}],
                 createdAt: {$gte: date}
             };
