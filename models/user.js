@@ -22,6 +22,7 @@ var sch = new Schema({
     followers: [{ type: Schema.Types.ObjectId, ref: 'User' }],
     videosLiked: [{ type: Schema.Types.ObjectId, ref: 'Video' }],
     videosDisliked: [{ type: Schema.Types.ObjectId, ref: 'Video' }],
+    loc :  { type: {type:String}, coordinates: [Number]},
     createdAt: {
         type: Date,
         default: Date.now
@@ -35,6 +36,7 @@ var sch = new Schema({
     }
 });
 
+sch.index({loc: '2dsphere'});
 var User = mongoose.model('User', sch);
 
 module.exports = User; // this is what you want
