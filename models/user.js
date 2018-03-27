@@ -22,7 +22,7 @@ var sch = new Schema({
     followers: [{ type: Schema.Types.ObjectId, ref: 'User' }],
     videosLiked: [{ type: Schema.Types.ObjectId, ref: 'Video' }],
     videosDisliked: [{ type: Schema.Types.ObjectId, ref: 'Video' }],
-    loc :  { type: {type:String}, coordinates: [0,0]},
+    loc :  {type: Object, default: { type: 'Point', coordinates: [0,0]}},
     createdAt: {
         type: Date,
         default: Date.now

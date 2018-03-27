@@ -22,7 +22,7 @@ var interactionsReference = db.ref('/interactions');
 
 var mongoose = require('mongoose');
 
-mongoose.connect(process.env.POPIDB);
+mongoose.connect('mongodb://popi-root:root-Pss!3020popi@104.236.87.130:28541/popiDatabase');
 
 mongoose.connection.on('connected', function () {
     // after a succesful connection start listening firebase
@@ -128,7 +128,7 @@ function saveInteractionToMongo(data, key) {
         },
         function (cb) {
             User.findOne({fbId: data.user}, function (err, user) {
-                if (err) {
+                if (err || !user) {
                     return;
                 }
                 cb(null, user);
@@ -197,6 +197,7 @@ function saveUserToMongo(data, key) {
 
     User.update({fbId: key}, {$set: userData}, {upsert: true}, function (err, data) {
         if (err) {
+            console.log(err);
             return;
         }
     });
