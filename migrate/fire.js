@@ -22,7 +22,7 @@ var interactionsReference = db.ref('/interactions');
 
 var mongoose = require('mongoose');
 
-mongoose.connect('mongodb://popi-root:root-Pss!3020popi@104.236.87.130:28541/popiDatabase');
+mongoose.connect(process.env.POPIDB);
 
 mongoose.connection.on('connected', function () {
     // after a succesful connection start listening firebase

@@ -209,4 +209,68 @@ router.post('/trend', function (req, res, next) {
     });
 });
 
+/* Get unwatched videos to user */
+router.post('/near', function (req, res, next) {
+    var userId = req.body.user;
+    var distanceAsKM = req.body.distance;
+
+    async.seq(
+        function (cb) {
+            User.findOne({fbId: userId}, function (err, user) {
+                if (err || !user) {
+                    return res.status(400).send({err: 'Kullanıcı bulunamadı'});
+                }
+                cb(null, user);
+            });
+        },
+        function (user, cb) {
+            var query = {
+                loc: {
+                    $nearSphere: {
+                        $geometry: {
+                            type: "Point",
+                            coordinates: user.loc.coordinates
+                        },
+                    $maxDistance: distanceAsKM * 1000
+                    }
+                },
+                fbId: {$nin: user.fbId}
+            };
+            User
+                .distinct('fbId' ,query)
+                .lean ()
+                .exec (function (err, users) {
+                    if (err) {
+                        return res.status(400).send({err: 'Yakın çevrede kullanıcı bulunamadı'});
+                    }
+                    cb (null, users);
+                });
+
+        },
+        function (users, cb) {
+            Video
+                .find({user: {$in: users}})
+                .sort({isPromoted: 'desc'})
+                .lean()
+                .populate({path: 'userObject', select: 'name fbId gender popiPoint'})
+                .limit(250)
+                .exec(function (err, videos) {
+                    if (err) {
+                        console.log(err);
+                        return res.status(400).send({err: 'Videolar bulunamadı'});
+                    }
+                    cb(null, videos);
+                });
+        }
+    )(function (err, data) {
+        if (err) {
+            console.error(err);
+            res.json({status: 'error', message: err.message});
+        } else {
+            res.json({status: 'success', message: 'Videolar', count: data.length, data: data});
+        }
+        return res;
+    });
+});
+
 module.exports = router;

@@ -363,6 +363,57 @@ router.post('/followees', function (req, res, next) {
         });
 });
 
+/* Get unwatched videos to user */
+router.post('/near', function (req, res, next) {
+    var userId = req.body.user;
+    var distanceAsKM = req.body.distance;
+
+    async.seq(
+        function (cb) {
+            User.findOne({fbId: userId}, function (err, user) {
+                if (err || !user) {
+                    return res.status(400).send({err: 'Kullanıcı bulunamadı'});
+                }
+                cb(null, user);
+            });
+        },
+        function (user, cb) {
+            var query = {
+                loc: {
+                    $nearSphere: {
+                        $geometry: {
+                            type: "Point",
+                            coordinates: user.loc.coordinates
+                        },
+                        $maxDistance: distanceAsKM * 1000
+                    }
+                },
+                fbId: {$nin: user.fbId}
+            };
+            User
+                .find(query)
+                .select('fbId loc profilePicture popiPoint name')
+                .sort({createdAt : 'desc'})
+                .lean ()
+                .exec (function (err, users) {
+                    if (err) {
+                        return res.status(400).send({err: 'Yakın çevrede kullanıcı bulunamadı'});
+                    }
+                    cb (null, users);
+                });
+
+        }
+    )(function (err, data) {
+        if (err) {
+            console.error(err);
+            res.json({status: 'error', message: err.message});
+        } else {
+            res.json({status: 'success', message: 'Kullanıcılar', count: data.length, data: data});
+        }
+        return res;
+    });
+});
+
 var sendNotification = function (follower, followee, type) {
     var interaction = new Interaction();
     var typeNo;
