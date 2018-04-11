@@ -16,7 +16,7 @@ var app = express();
 
 var mongoose = require('mongoose');
 
-mongoose.connect(process.env.POPIDB);
+mongoose.connect('mongodb://popi-root:root-Pss!3020popi@104.236.87.130:28541/popiDatabase');
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');

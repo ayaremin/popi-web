@@ -12,7 +12,7 @@ var promise = require('promise');
 var router = express.Router();
 var mongoose = require('mongoose');
 
-mongoose.connect(process.env.POPIDB);
+mongoose.connect('mongodb://popi-root:root-Pss!3020popi@104.236.87.130:28541/popiDatabase');
 
 AWS.config.update({accessKeyId: 'AKIAJRC7DLNEHD2NRRMQ', secretAccessKey: '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'});
 

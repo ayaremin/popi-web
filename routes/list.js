@@ -10,7 +10,7 @@ var fs = require('fs');
 var router = express.Router();
 var mongoose = require('mongoose');
 
-mongoose.connect(process.env.POPIDB);
+mongoose.connect('mongodb://popi-root:root-Pss!3020popi@104.236.87.130:28541/popiDatabase');
 
 router.post('/overall', function (req, res, next) {
     var userId = req.body.user;
